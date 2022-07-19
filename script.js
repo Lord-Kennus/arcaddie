@@ -1,133 +1,86 @@
 window.onload = () => {
     const button = document.querySelector('button[data-action="change"]');
-    button.innerText = 'Next Hole';
-    const Count = 0;
-    const icon = document.createElement('a-image');
-    let scene = document.querySelector('a-scene');
+    button.innerText = '﹖';
+
     let places = staticLoadPlaces();
-    renderPlace(Places[0]);
+    renderPlaces(places);
 };
 
-AFRAME.registerComponent('clicker', {
-    init: function() {
-        this.el.addEventListener('click', e => {
-            alert('Distance Is');
-        });
-    }
-});
-
 function staticLoadPlaces() {
-    const PLACES = [
+    return [
         {
-            name: 'Hole 1',
+            name: 'Pokèmon',
             location: {
-                lat: 55.085435,
-                lng: -6.453691,  
-            }
-        },
-        {
-            name: 'Hole 2',
-            location: {
-                lat: 55.085828,
-                lng: -6.452037,
-            }
-        },
-        {
-            name: 'Hole 3',
-            location: {
-                lat: 55.086073,
-                lng: -6.450320,
-        }
-        },
-        {
-            name: 'Hole 4',
-            location: {
-                lat: 55.084108,
-                lng: -6.453605,
-            }
-        },
-        {
-            name: 'Hole 5',
-            location: {
-                lat: 55.084108,
-                lng: -6.451071,
-            }
+                // decomment the following and add coordinates:
+                lat: 23.075773,
+                lng: 72.524211,
+            },
         },
     ];
-    
-    return new Promise((resolve, reject) => {
-        try {
-            resolve(PLACES)
-        } catch (err) {
-            reject(err)
-        }
-    })
 }
 
-function NextHole(){
-    scene.removeChild(icon);
-    Count++;
-    if (Count < 0 || Count <= 17){
-        Count = 0;
-    }
-    else{
-        renderPlace(Places);
-    }
-}
+var models = [
+    {
+        url: './assets/magnemite/scene.gltf',
+        scale: '0.5 0.5 0.5',
+        info: 'Magnemite, Lv. 5, HP 10/10',
+        rotation: '0 180 0',
+    },
+    {
+        url: './assets/articuno/scene.gltf',
+        scale: '0.2 0.2 0.2',
+        rotation: '0 180 0',
+        info: 'Articuno, Lv. 80, HP 100/100',
+    },
+    {
+        url: './assets/dragonite/scene.gltf',
+        scale: '0.08 0.08 0.08',
+        rotation: '0 180 0',
+        info: 'Dragonite, Lv. 99, HP 150/150',
+    },
+];
 
-/*function renderPlace(place){
-    const latitude = place.location.lat;
-    const longitude = place.location.lng;
-    
-    icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-    icon.setAttribute('name', place.name);
-    icon.setAttribute('src', './assets/map-marker.png');
-    icon.setAttribute('scale', '20, 20');
+var modelIndex = 0;
+var setModel = function (model, entity) {
+    if (model.scale) {
+        entity.setAttribute('scale', model.scale);
+    }
 
-    scene.appendChild(icon);
-}*/
+    if (model.rotation) {
+        entity.setAttribute('rotation', model.rotation);
+    }
+
+    if (model.position) {
+        entity.setAttribute('position', model.position);
+    }
+
+    entity.setAttribute('gltf-model', model.url);
+
+    const div = document.querySelector('.instructions');
+    div.innerText = model.info;
+};
 
 function renderPlaces(places) {
-        const place = places[Count];
-        const latitude = place.location.lat;
-        const longitude = place.location.lng;
+    let scene = document.querySelector('a-scene');
 
+    places.forEach((place) => {
+        let latitude = place.location.lat;
+        let longitude = place.location.lng;
 
-        // add place icon
-        const icon = document.createElement('a-image');
-        icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-        icon.setAttribute('name', place.name);
-        icon.setAttribute('src', './assets/map-marker.png');
+        let model = document.createElement('a-entity');
+        model.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
 
-        // for debug purposes, just show in a bigger scale, otherwise I have to personally go on places...
-        icon.setAttribute('scale', '20, 20');
+        setModel(models[modelIndex], model);
 
-        icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
+        model.setAttribute('animation-mixer', '');
 
-        const clickListener = function (ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
+        document.querySelector('button[data-action="change"]').addEventListener('click', function () {
+            var entity = document.querySelector('[gps-entity-place]');
+            modelIndex++;
+            var newIndex = modelIndex % models.length;
+            setModel(models[newIndex], entity);
+        });
 
-            const name = ev.target.getAttribute('name');
-
-            const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-            if (el && el === ev.target) {
-                const label = document.createElement('span');
-                const container = document.createElement('div');
-                container.setAttribute('id', 'place-label');
-                label.innerText = name;
-                container.appendChild(label);
-                document.body.appendChild(container);
-
-                setTimeout(() => {
-                    container.parentElement.removeChild(container);
-                }, 1500);
-            }
-        };
-
-        icon.addEventListener('click', clickListener);
-
-        scene.appendChild(icon);
-    
+        scene.appendChild(model);
+    });
 }
