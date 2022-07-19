@@ -1,22 +1,16 @@
-window.onload = () => {
-    const button = document.querySelector('button[data-action="change"]');
-    button.innerText = 'Next Hole';
-    const Count = 0;
-    const icon = document.createElement('a-image');
-    let scene = document.querySelector('a-scene');
-    let places = staticLoadPlaces();
-    renderPlaces(place);
+const loadPlaces = function (coords) {
+    // COMMENT FOLLOWING LINE IF YOU WANT TO USE STATIC DATA AND ADD COORDINATES IN THE FOLLOWING 'PLACES' ARRAY
+    const method = 'static';
+
+    if (method === 'api') {
+        return loadPlaceFromAPIs(coords);
+    }
+
+    return loadPlaceStatic();
 };
 
-/*AFRAME.registerComponent('clicker', {
-    init: function() {
-        this.el.addEventListener('click', e => {
-            alert('Distance Is');
-        });
-    }
-});*/
-
-function staticLoadPlaces() {
+// get the static places
+function loadPlaceStatic() {
     const PLACES = [
         {
             name: 'Hole 1',
@@ -54,7 +48,7 @@ function staticLoadPlaces() {
             }
         },
     ];
-    
+
     return new Promise((resolve, reject) => {
         try {
             resolve(PLACES)
@@ -64,70 +58,73 @@ function staticLoadPlaces() {
     })
 }
 
-function NextHole(){
-    scene.removeChild(icon);
-    Count++;
-    if (Count < 0 || Count <= 17){
-        Count = 0;
-    }
-    else{
-        renderPlaces(places);
-    }
-}
+// getting places from REST APIs
+function loadPlaceFromAPIs(position) {
+    const params = {
+        radius: 300,    // search places not farther than this value (in meters)
+        clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',
+        clientSecret: 'GYRKWWJMO2WK3KIRWBXIN5FQAWXTVFIK2QM4VQWNQ4TRAKWH',
+        version: '20300101',    // foursquare versioning, required but unuseful for this demo
+    };
 
-/*function renderPlace(place){
-    const latitude = place.location.lat;
-    const longitude = place.location.lng;
-    
-    icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-    icon.setAttribute('name', place.name);
-    icon.setAttribute('src', './assets/map-marker.png');
-    icon.setAttribute('scale', '20, 20');
+    // CORS Proxy to avoid CORS problems
+    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
 
-    scene.appendChild(icon);
-}*/
+    // Foursquare API
+    const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
+        &ll=${position.latitude},${position.longitude}
+        &radius=${params.radius}
+        &client_id=${params.clientId}
+        &client_secret=${params.clientSecret}
+        &limit=15
+        &v=${params.version}`;
+    return fetch(endpoint)
+        .then((res) => {
+            return res.json()
+                .then((resp) => {
+                    return resp.response.venues;
+                })
+        })
+        .catch((err) => {
+            console.error('Error with places API', err);
+        })
+};
 
-function renderPlaces(places) {
-        const place = places[Count];
-        const latitude = place.location.lat;
-        const longitude = place.location.lng;
 
+window.onload = () => {
+    const scene = document.querySelector('a-scene');
 
-        // add place icon
-        const icon = document.createElement('a-image');
-        icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-        icon.setAttribute('name', place.name);
-        icon.setAttribute('src', './assets/map-marker.png');
+    // first get current user location
+    return navigator.geolocation.getCurrentPosition(function (position) {
 
-        // for debug purposes, just show in a bigger scale, otherwise I have to personally go on places...
-        icon.setAttribute('scale', '20, 20');
+        // than use it to load from remote APIs some places nearby
+        loadPlaces(position.coords)
+            .then((places) => {
+                alert(position.coords.latitude + " : " + position.coords.longitude);
+                places.forEach((place) => {
+                    const latitude = place.location.lat;
+                    const longitude = place.location.lng;
 
-        icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
+                    // add place name
+                    const text = document.createElement('a-link');
+                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                    text.setAttribute('title', place.name);
+                    text.setAttribute('href', 'https://akqa.com/');
+                    text.setAttribute('scale', '13 13 13');
 
-        const clickListener = function (ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
+                    text.addEventListener('loaded', () => {
+                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+                    });
 
-            const name = ev.target.getAttribute('name');
-
-            const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-            if (el && el === ev.target) {
-                const label = document.createElement('span');
-                const container = document.createElement('div');
-                container.setAttribute('id', 'place-label');
-                label.innerText = name;
-                container.appendChild(label);
-                document.body.appendChild(container);
-
-                setTimeout(() => {
-                    container.parentElement.removeChild(container);
-                }, 1500);
-            }
-        };
-
-        icon.addEventListener('click', clickListener);
-
-        scene.appendChild(icon);
-    
-}
+                    scene.appendChild(text);
+                });
+            })
+    },
+        (err) => console.error('Error in retrieving position', err),
+        {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 27000,
+        }
+    );
+};
