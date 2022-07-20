@@ -153,7 +153,6 @@ window.onload = () => {
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('href', 'https://akqa.com/');
                     text.setAttribute('scale', '13 13 13');
 
                     text.addEventListener('loaded', () => {
