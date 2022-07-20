@@ -62,7 +62,7 @@ function loadPlaceStatic() {
 }
 /*
 function nextHole(){
-    scene.removeChild(text);
+    scene.parentElement.removeChild(scene);
     Count++;
     alert('Hole:',Count);
     if (Count <= 18){  // Future change, Count <= Hole 
@@ -74,7 +74,7 @@ function nextHole(){
 }
 
 function previousHole(){
-    scene.removeChild(text);
+    scene.parentElement.removeChild(scene);
     Count--;
     alert('Hole', Count);
     if(Count < 1){
@@ -149,6 +149,30 @@ window.onload = () => {
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
+
+                    /*  Click Event for Distance
+                    const clickListener = function(ev) {
+                        ev.stopPropagation();
+                        ev.preventDefault();
+			            const distanceMsg = document.querySelector('[gps-entity-place]').getAttribute('distanceMsg');
+                        const el = ev.detail.intersection && ev.detail.intersection.object.el;
+
+                        if (el && el === ev.target) {
+                            const label = document.createElement('span');
+                            const container = document.createElement('div');
+                            container.setAttribute('id', 'place-dist');
+                            label.innerText = distanceMsg;
+                            container.appendChild(label);
+                            document.body.appendChild(container);
+                            
+                            setTimeout(() => {
+                                container.parentElement.removeChild(container);
+                            }, 1500);
+                        }
+                    };
+
+                    text.addEventListener('click', clickListener);
+                    //*/
                     scene.appendChild(text);
                 });
             })
