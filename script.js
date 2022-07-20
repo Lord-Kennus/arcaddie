@@ -3,7 +3,8 @@ var db = firebase.firestore();
 var storageRef = firebase.storage().ref();
 */
 const loadPlaces = function (coords) {
-    ///*const method = 'static';
+    ///*
+    const method = 'static';
     if (method === 'api') {
         return loadPlaceFromAPIs(coords);
     }
