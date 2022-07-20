@@ -85,7 +85,7 @@ function previousHole(){
         renderPlaces(places);
     }
 }
-
+/*
 const calcDist = function(lat2, lon2){
     const R = 6371e3; 
     const φ1 = position.coords.latitude * Math.PI/180;
@@ -100,21 +100,17 @@ const calcDist = function(lat2, lon2){
 
     const d = R * c;
     return d;
-} 
-*/
+} */
+//*/
 // getting places from REST APIs
 function loadPlaceFromAPIs(position) {
     const params = {
-        radius: 300,    // search places not farther than this value (in meters)
+        radius: 300,    
         clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',
         clientSecret: 'GYRKWWJMO2WK3KIRWBXIN5FQAWXTVFIK2QM4VQWNQ4TRAKWH',
-        version: '20300101',    // foursquare versioning, required but unuseful for this demo
+        version: '20300101',   
     };
-
-    // CORS Proxy to avoid CORS problems
     const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-
-    // Foursquare API
     const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
         &ll=${position.latitude},${position.longitude}
         &radius=${params.radius}
@@ -134,14 +130,9 @@ function loadPlaceFromAPIs(position) {
         })
 };
 
-
 window.onload = () => {
     const scene = document.querySelector('a-scene');
-
-    // first get current user location
     return navigator.geolocation.getCurrentPosition(function (position) {
-
-        // than use it to load from remote APIs some places nearby
         loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
@@ -153,12 +144,11 @@ window.onload = () => {
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '13 13 13');
+                    text.setAttribute('scale', '8 8 8');
 
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
-
                     scene.appendChild(text);
                 });
             })
