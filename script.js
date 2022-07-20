@@ -140,7 +140,6 @@ window.onload = () => {
                     const latitude = place.location.lat;
                     const longitude = place.location.lng;
 
-                    // add place name
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
@@ -150,11 +149,12 @@ window.onload = () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
 
-                    /*  Click Event for Distance
+                    ///*  Click Event for Distance
                     const clickListener = function(ev) {
                         ev.stopPropagation();
                         ev.preventDefault();
-			            const distanceMsg = document.querySelector('[gps-entity-place]').getAttribute('distanceMsg');
+                        const distanceMsg = document.querySelector('[gps-entity-place]').getAttribute('distanceMsg');
+                        // const distanceMsg = calcDist(place.location.lat,place.location.lng)
                         const el = ev.detail.intersection && ev.detail.intersection.object.el;
 
                         if (el && el === ev.target) {
