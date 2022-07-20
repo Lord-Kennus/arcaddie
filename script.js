@@ -3,11 +3,11 @@ var db = firebase.firestore();
 var storageRef = firebase.storage().ref();
 */
 const loadPlaces = function (coords) {
-    /*const method = 'static';
+    ///*const method = 'static';
     if (method === 'api') {
         return loadPlaceFromAPIs(coords);
-    }*/
-
+    }
+    //*/
     return loadPlaceStatic();
 };
 
@@ -60,7 +60,7 @@ function loadPlaceStatic() {
     })
 }
 
-/*
+///*
 function loadPlaceFromAPIs(position) {
     const params = {
         radius: 300,    
@@ -87,7 +87,7 @@ function loadPlaceFromAPIs(position) {
             console.error('Error with places API', err);
         })
 };
-*/
+//*/
 
 function nextHole(){
     scene.removeChild(text);
@@ -152,7 +152,7 @@ window.onload = () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
 
-                    ///*  Click Event for Distance
+                    /*  Click Event for Distance
                     const clickListener = function(ev) {
                         ev.stopPropagation();
                         ev.preventDefault();
