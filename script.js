@@ -1,6 +1,7 @@
+/*
 var db = firebase.firestore();
 var storageRef = firebase.storage().ref();
-
+*/
 const loadPlaces = function (coords) {
     /*const method = 'static';
     if (method === 'api') {
@@ -124,7 +125,7 @@ const calcDist = function(lat2, lon2){
           Math.sin(Δλ/2) * Math.sin(Δλ/2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-    const d = R * c; // in metres
+    const d = R * c;
     return d;
 }
 
