@@ -60,36 +60,7 @@ function loadPlaceStatic() {
         }
     })
 }
-
-///*
-function loadPlaceFromAPIs(position) {
-    const params = {
-        radius: 300,    
-        clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',
-        clientSecret: 'GYRKWWJMO2WK3KIRWBXIN5FQAWXTVFIK2QM4VQWNQ4TRAKWH',
-        version: '20300101',    
-    };
-    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-    const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
-        &ll=${position.latitude},${position.longitude}
-        &radius=${params.radius}
-        &client_id=${params.clientId}
-        &client_secret=${params.clientSecret}
-        &limit=15
-        &v=${params.version}`;
-    return fetch(endpoint)
-        .then((res) => {
-            return res.json()
-                .then((resp) => {
-                    return resp.response.venues;
-                })
-        })
-        .catch((err) => {
-            console.error('Error with places API', err);
-        })
-};
-//*/
-
+/*
 function nextHole(){
     scene.removeChild(text);
     Count++;
@@ -129,13 +100,48 @@ const calcDist = function(lat2, lon2){
 
     const d = R * c;
     return d;
-}
+} 
+*/
+// getting places from REST APIs
+function loadPlaceFromAPIs(position) {
+    const params = {
+        radius: 300,    // search places not farther than this value (in meters)
+        clientId: 'HZIJGI4COHQ4AI45QXKCDFJWFJ1SFHYDFCCWKPIJDWHLVQVZ',
+        clientSecret: 'GYRKWWJMO2WK3KIRWBXIN5FQAWXTVFIK2QM4VQWNQ4TRAKWH',
+        version: '20300101',    // foursquare versioning, required but unuseful for this demo
+    };
+
+    // CORS Proxy to avoid CORS problems
+    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
+
+    // Foursquare API
+    const endpoint = `${corsProxy}https://api.foursquare.com/v2/venues/search?intent=checkin
+        &ll=${position.latitude},${position.longitude}
+        &radius=${params.radius}
+        &client_id=${params.clientId}
+        &client_secret=${params.clientSecret}
+        &limit=15
+        &v=${params.version}`;
+    return fetch(endpoint)
+        .then((res) => {
+            return res.json()
+                .then((resp) => {
+                    return resp.response.venues;
+                })
+        })
+        .catch((err) => {
+            console.error('Error with places API', err);
+        })
+};
 
 
 window.onload = () => {
-    const Count = 0;
     const scene = document.querySelector('a-scene');
+
+    // first get current user location
     return navigator.geolocation.getCurrentPosition(function (position) {
+
+        // than use it to load from remote APIs some places nearby
         loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
@@ -147,37 +153,12 @@ window.onload = () => {
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '2 2 2');
+                    text.setAttribute('href', 'https://akqa.com/');
+                    text.setAttribute('scale', '13 13 13');
 
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
-
-                    /*  Click Event for Distance
-                    const clickListener = function(ev) {
-                        ev.stopPropagation();
-                        ev.preventDefault();
-
-                        const dist = calcDist(latitude,longitude);
-
-                        const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-                        if (el && el === ev.target) {
-                            const label = document.createElement('span');
-                            const container = document.createElement('div');
-                            container.setAttribute('id', 'place-dist');
-                            label.innerText = dist;
-                            container.appendChild(label);
-                            document.body.appendChild(container);
-                            
-                            setTimeout(() => {
-                                container.parentElement.removeChild(container);
-                            }, 1500);
-                        }
-                    };
-
-                    icon.addEventListener('click', clickListener);
-                    //*/
 
                     scene.appendChild(text);
                 });
