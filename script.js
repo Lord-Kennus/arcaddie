@@ -1,4 +1,4 @@
-/*
+/*  Need to create firebase connection
 var db = firebase.firestore();
 var storageRef = firebase.storage().ref();
 */
@@ -12,6 +12,7 @@ const loadPlaces = function (coords) {
 };
 
 function loadPlaceStatic() {
+    //Will create an array of hole POI from current hole based on the Count Value
     const PLACES = [
         {
             name: 'Hole 1',
@@ -151,12 +152,12 @@ window.onload = () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
 
-                    /*  Click Event for Distance
+                    ///*  Click Event for Distance
                     const clickListener = function(ev) {
                         ev.stopPropagation();
                         ev.preventDefault();
 
-                        const dist = calcDist;
+                        const dist = calcDist(latitude,longitude);
 
                         const el = ev.detail.intersection && ev.detail.intersection.object.el;
 
