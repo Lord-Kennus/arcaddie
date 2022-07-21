@@ -12,6 +12,36 @@
             THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
         </script>
         <script src="./script.js?v=3"></script>
+
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+            import { getDatabase } from "firebase/database";
+            
+            const firebaseConfig = {
+                 databaseURL: "https://DATABASE_NAME.firebaseio.com",
+            };
+
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
+              authDomain: "golfar-ce0b6.firebaseapp.com",
+              databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app",
+              projectId: "golfar-ce0b6",
+              storageBucket: "golfar-ce0b6.appspot.com",
+              messagingSenderId: "41881550667",
+              appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
+            };
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const database = getDatabase(app);
+
+          </script>
+
         <link rel="stylesheet" type="text/css" href="./style.css"/>
     </head>
     
@@ -26,6 +56,8 @@
 </a-scene>
 <div class="centered">
     <button data-action="change"></button>
+    <NextBtn onclick="NextHole()">Next</button>
+    <BackBtn onclick="PreviousHole()">Back</button>
 </div>
 </body>
 </html>

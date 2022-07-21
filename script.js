@@ -1,7 +1,8 @@
-/*  Need to create firebase connection
+
 var db = firebase.firestore();
-var storageRef = firebase.storage().ref();
-*/
+var dbRef = firebase.database().ref().child('text');
+const Count = 1;
+
 const loadPlaces = function (coords) {
     ///*
     const method = 'static';
@@ -51,6 +52,22 @@ function loadPlaceStatic() {
             }
         },
     ];
+    const dbref = ref(db);
+    get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((HoleSnap)=>{
+        const Hole = ("Hole " + Count);    
+        const Haz = HoleSnap.val().Hazard;
+        get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P/" + Hole)).then((PointSnap)=>{
+            if(PointSnap.exist()){
+                PLACES.push(
+                    name: 'Hole 5',
+                        location: {
+                            lat: 55.084108,
+                            lng: -6.451071,
+                    }
+                )
+            }
+        });
+    });
 
     return new Promise((resolve, reject) => {
         try {
@@ -100,9 +117,9 @@ const calcDist = function(lat2, lon2){
 
     const d = R * c;
     return d;
-} */
+} 
 //*/
-// getting places from REST APIs
+///*
 function loadPlaceFromAPIs(position) {
     const params = {
         radius: 300,    
@@ -129,7 +146,7 @@ function loadPlaceFromAPIs(position) {
             console.error('Error with places API', err);
         })
 };
-
+//*/
 window.onload = () => {
     const scene = document.querySelector('a-scene');
     return navigator.geolocation.getCurrentPosition(function (position) {
