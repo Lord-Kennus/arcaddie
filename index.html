@@ -1,64 +1,30 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-        <meta charset='utf-8'>
-        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-        <title>GeoAR.js demo</title>
-        <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
-        <script src="https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js"></script>
-        <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-        <script>
-            THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
-        </script>
-        <script src="./script.js"></script>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Golf Test</title>
+    <script src='https://aframe.io/releases/0.9.2/aframe.min.js'></script>
+    <script src='https://raw.githack.com/jeromeetienne/AR.js/master/aframe/build/aframe-ar.min.js'></script>
+    <script>
+        THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
+    </script>
 
-        <script type="module">
-            /*
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
-            import { getDatabase, ref, get, set , child, update, remove } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
-            
-            const firebaseConfig = {
-                 databaseURL: "https://DATABASE_NAME.firebaseio.com",
-            };
-
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-          
-            // Your web app's Firebase configuration
-            const firebaseConfig = {
-              apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
-              authDomain: "golfar-ce0b6.firebaseapp.com",
-              databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app",
-              projectId: "golfar-ce0b6",
-              storageBucket: "golfar-ce0b6.appspot.com",
-              messagingSenderId: "41881550667",
-              appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
-            };
-          
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const database = getDatabase(app);
-            //*/
-          </script>
-
-        <link rel="stylesheet" type="text/css" href="./style.css"/>
-    </head>
-    
+    <link rel="stylesheet" href="./style.css">
+</head>
 
 <body style='margin: 0; overflow: hidden;'>
-    <div class="centered instructions"></div>
-    <a-scene 
-        vr-mode-ui='enabled: false' 
-        embedded
-        arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-        <a-camera rotation-reader> </a-camera>
-</a-scene>
-<div class="centered">
-    <button data-action="change"></button>
-    <NextBtn onclick="NextHole()">Next</button>
-    <BackBtn onclick="PreviousHole()">Back</button>
-</div>
+    <a-scene
+        cursor='rayOrigin: mouse; fuse: true; fuseTimeout: 0;'
+        raycaster="objects: [gps-entity-place];"
+        vr-mode-ui="enabled: false"
+		embedded
+		arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
+
+        <a-camera gps-camera="minDistance: 10;" rotation-reader>
+		</a-camera>
+    </a-scene>
+    
+    <script src="./assets/js/script.js"></script>
 </body>
-</html>
