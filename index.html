@@ -11,12 +11,13 @@
         <script>
             THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
         </script>
-        <script src="./script.js?v=3"></script>
+        <script src="./script.js"></script>
 
         <script type="module">
+            /*
             // Import the functions you need from the SDKs you need
             import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
-            import { getDatabase } from "firebase/database";
+            import { getDatabase, ref, get, set , child, update, remove } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-database.js";
             
             const firebaseConfig = {
                  databaseURL: "https://DATABASE_NAME.firebaseio.com",
@@ -39,7 +40,7 @@
             // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const database = getDatabase(app);
-
+            //*/
           </script>
 
         <link rel="stylesheet" type="text/css" href="./style.css"/>
@@ -52,7 +53,7 @@
         vr-mode-ui='enabled: false' 
         embedded
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'>
-        <a-camera id='camera1' look-controls-enabled='false' arjs-look-controls='smoothingFactor: 0.1' gps-camera='gpsMinDistance: 5' rotation-reader> </a-camera>
+        <a-camera rotation-reader> </a-camera>
 </a-scene>
 <div class="centered">
     <button data-action="change"></button>
