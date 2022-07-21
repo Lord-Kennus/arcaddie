@@ -155,7 +155,7 @@ window.onload = () => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
                 places.forEach((place) => {
                     const latitude = place.location.lat;
-                    const longitude = place.location.long;
+                    const longitude = place.location.lng;
 
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
