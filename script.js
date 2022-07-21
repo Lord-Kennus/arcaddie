@@ -1,11 +1,16 @@
+const loadPlaces = function (coords) {
+    // COMMENT FOLLOWING LINE IF YOU WANT TO USE STATIC DATA AND ADD COORDINATES IN THE FOLLOWING 'PLACES' ARRAY
+    const method = 'static';
 
-var db = firebase.firestore();
-var dbRef = firebase.database().ref().child('text');
-const Count = 1;
+    if (method === 'api') {
+        return loadPlaceFromAPIs(coords);
+    }
 
+    return loadPlaceStatic();
+};
 
+// get the static places
 function loadPlaceStatic() {
-    
     const PLACES = [
         {
             name: 'Hole 1',
@@ -43,13 +48,7 @@ function loadPlaceStatic() {
             }
         },
     ];
-    /*
-    const dbref = ref(db);
-    get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((HoleSnap)=>{
-        const PLACES;
-        PLACES.push(HoleSnap);
-    });
-    //*/
+
     return new Promise((resolve, reject) => {
         try {
             resolve(PLACES)
@@ -58,17 +57,6 @@ function loadPlaceStatic() {
         }
     })
 }
-
-const loadPlaces = function (coords) {
-    // COMMENT FOLLOWING LINE IF YOU WANT TO USE STATIC DATA AND ADD COORDINATES IN THE FOLLOWING 'PLACES' ARRAY
-    const method = 'static';
-
-    if (method === 'api') {
-        return loadPlaceFromAPIs(coords);
-    }
-
-    return loadPlaceStatic();
-};
 
 // getting places from REST APIs
 function loadPlaceFromAPIs(position) {
