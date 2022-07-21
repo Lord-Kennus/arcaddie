@@ -2,7 +2,7 @@
 var db = firebase.firestore();
 var dbRef = firebase.database().ref().child('text');
 const Count = 1;
-
+const PLACES;
 const loadPlaces = function (coords) {
     ///*
     const method = 'static';
@@ -14,8 +14,8 @@ const loadPlaces = function (coords) {
 };
 
 function loadPlaceStatic() {
-    //Will create an array of hole POI from current hole based on the Count Value
-    const PLACES = [
+    
+    PLACES = [
         {
             name: 'Hole 1',
             location: {
@@ -52,23 +52,13 @@ function loadPlaceStatic() {
             }
         },
     ];
+    /*
     const dbref = ref(db);
     get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((HoleSnap)=>{
-        const Hole = ("Hole " + Count);    
-        const Haz = HoleSnap.val().Hazard;
-        get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P/" + Hole)).then((PointSnap)=>{
-            if(PointSnap.exist()){
-                PLACES.push(
-                    name: 'Hole 5',
-                        location: {
-                            lat: 55.084108,
-                            lng: -6.451071,
-                    }
-                )
-            }
-        });
+        const PLACES;
+        PLACES.push(HoleSnap);
     });
-
+    //*/
     return new Promise((resolve, reject) => {
         try {
             resolve(PLACES)
@@ -78,8 +68,17 @@ function loadPlaceStatic() {
     })
 }
 /*
+function resetPlaces(){
+    if(PLACES.length > 0){
+        for(const i = 0; i > PLACES.length; i++){
+            PLACES.shift();
+        }
+    }
+}
+
 function nextHole(){
     scene.parentElement.removeChild(scene);
+    resetPlaces();
     Count++;
     alert('Hole:',Count);
     if (Count <= 18){  // Future change, Count <= Hole 
@@ -92,6 +91,7 @@ function nextHole(){
 
 function previousHole(){
     scene.parentElement.removeChild(scene);
+    resetPlaces();
     Count--;
     alert('Hole', Count);
     if(Count < 1){
@@ -155,18 +155,18 @@ window.onload = () => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
                 places.forEach((place) => {
                     const latitude = place.location.lat;
-                    const longitude = place.location.lng;
+                    const longitude = place.location.long;
 
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '8 8 8');
+                    text.setAttribute('scale', '6 6 6');
 
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
 
-                    ///*  Click Event for Distance
+                    /*  Click Event for Distance
                     const clickListener = function(ev) {
                         ev.stopPropagation();
                         ev.preventDefault();
