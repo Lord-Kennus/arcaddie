@@ -64,15 +64,18 @@ function loadPlaceStatic() {
 
 function resetPlaces(){
     if(PLACES.length > 0){
-        for(const i = 0; i > PLACES.length; i++){
+        for(let i = 0; i > PLACES.length; i++){
             PLACES.shift();
         }
     }
 }
 
 function renderPlaces(places) {
+    /*
     let scene = document.querySelector('a-scene');
-    //scene.remove();   //Need to reset the scene
+    for(let j = 0; j < scene.children.length(); j++){
+        scene.removeChild(scene.lastChild);
+    }//*/
     places.forEach((place) => {
         let name = place.name();
         let latitude = place.location.lat;  // place.lat;
@@ -164,13 +167,13 @@ function PreviousHole(){
 // ------------------------------------ON PAGE LOAD--------------------------------
 
 window.onload = () => {
-    alert(get(child(dbref,"Gracehill Golf Course/Hole1P")));
+    //alert(get(child(dbref,"Gracehill Golf Course/Hole1P")));
     return navigator.geolocation.getCurrentPosition(function (position) {
         loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
-                renderPlaces(places);
-                /*
+                //renderPlaces(places);
+                ///*
                 places.forEach((place) => {
                     const latitude = place.location.lat;
                     const longitude = place.location.lng;
