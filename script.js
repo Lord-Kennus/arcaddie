@@ -84,7 +84,7 @@ function renderPlaces(){
                     });
                     scene.appendChild(text);
                 });
-            })
+            });
 }
 
 window.onload = () => {
