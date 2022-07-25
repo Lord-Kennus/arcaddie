@@ -1,4 +1,5 @@
 var Count = 1;
+const scene = document.querySelector('a-scene');
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
@@ -40,7 +41,6 @@ function resetPlaces(){
 
 
 function NextHole(){
-    scene = null;
     //resetPlaces();
     Count++;
     if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
@@ -63,7 +63,6 @@ function PreviousHole(){
     }
     else{
        //renderPlaces(places);
-        
     }//*/
     document.getElementById("field1").value = ('Hole ' + Count);
 }
@@ -87,7 +86,6 @@ function renderPlaces(){
 }
 
 window.onload = () => {
-    const scene = document.querySelector('a-scene');
     return navigator.geolocation.getCurrentPosition(function (position) {
         loadPlaces(position.coords)
             .then((places) => {
