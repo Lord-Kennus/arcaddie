@@ -44,12 +44,11 @@ function NextHole(){
     //resetPlaces();
     Count++;
     if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
-        ;//  renderPlaces(places);
-    }
-    else{
         alert('You are finished!');
         Count--;
-      
+    }
+    else{
+        //  renderPlaces(places);
     }//*/
     document.getElementById("field1").value = ('Hole ' + Count);
 }
