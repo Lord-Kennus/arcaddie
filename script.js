@@ -53,17 +53,20 @@ function LoadPOI() {
 function NextHole(){
     //scene.parentElement.removeChild(scene);
     //resetPlaces();
+    Count++;
     if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
         alert('You are finished!');
     }
     else{
       //  renderPlaces(places);
     }
+    document.getElementById("field1").value = ('Hole ' + Count);
 }
 
 function PreviousHole(){
     //scene.parentElement.removeChild(scene);
     //resetPlaces();
+    Count--;
     alert('Hole', Count);
     if(Count < 1){
         alert('There is no previous hole!');
@@ -72,6 +75,7 @@ function PreviousHole(){
     else{
         //renderPlaces(places);
     }
+    document.getElementById("field1").value = ('Hole ' + Count);
 }
 
 window.onload = () => {
@@ -97,14 +101,14 @@ window.onload = () => {
                         //var entity = document.querySelector('[gps-entity-place]');
                         Count++;
                         //NextHole();
-                        div.innerText = ("Hole" + Count);
+                        div.innerText.value = ("Hole" + Count);
                         
                     });
                     document.querySelector('button[data-action="Back"]').addEventListener('click', function () {
                         //var entity = document.querySelector('[gps-entity-place]');
                         Count--;
                         //PreviousHole();
-                        div.innerText = ("Hole" + Count);
+                        div.innerText.value = ("Hole" + Count);
                     });
             
 

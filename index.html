@@ -17,7 +17,6 @@
 <script src="./script.js"></script>
 
 <body style='margin: 0; overflow: hidden;'>
-    <div class="centered instructions">Hole ?</div>
     <a-scene
         cursor='rayOrigin: mouse; fuse: true; fuseTimeout: 0;'
         raycaster="objects: [gps-entity-place];"
@@ -29,8 +28,11 @@
 		</a-camera>
     </a-scene>
     
-    <div class="centered">
-        <button data-action="Back">Back</button>
-        <button2 data-action="Next">Next</button2>
-    </div>
+    <div class= "top">
+            <p><input type="text" id="field1" value="Hole ?"></p>
+        </div>
+        <div class="centered">
+              <button onclick="PreviousHole()">Back</button>
+              <button onclick="NextHole()">Next</button>
+          </div>
 </body>
