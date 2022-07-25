@@ -58,6 +58,7 @@ function NextHole(){
     Count++;
     if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
         alert('You are finished!');
+        Count--;
     }
     else{
       //  renderPlaces(places);
