@@ -115,7 +115,18 @@ window.onload = () => {
         loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
-                renderPlaces(places);
+                places.forEach((place) => {
+                    const latitude = place.location.lat;
+                    const longitude = place.location.lng;
+                    const text = document.createElement('a-link');
+                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                    text.setAttribute('title', place.name);
+                    text.setAttribute('scale', '8 8 8');
+                    text.addEventListener('loaded', () => {
+                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+                    });
+                    scene.appendChild(text);
+                });
             })
     },
         (err) => console.error('Error in retrieving position', err),
