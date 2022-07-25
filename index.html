@@ -15,8 +15,9 @@
         <a-scene
             renderer="logarithmicDepthBuffer: true;"
             embedded
-            loading-screen="enabled: treu;"
-            arjs="sourceType: webcam; debugUIEnabled: true;"
+            loading-screen="enabled: true;"
+            arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'
+        ></a-scene>
         >
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
