@@ -1,4 +1,4 @@
-var Count = 1;
+
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
@@ -127,6 +127,7 @@ function renderPlaces(places) {
 }
 
 window.onload = () => {
+    var Count = 1;
     const scene = document.querySelector('a-scene');
 
     // first get current user location
