@@ -50,27 +50,52 @@ function loadPlaceStatic() {
     })
 }
 
+// ------------------------------------BUTTON FUNCTIONS--------------------------------
+
+function NextHole(){
+    //resetPlaces();
+    Count++;
+    if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
+        alert('You are finished!');
+        Count--;
+    }
+    else{
+        //  renderPlaces(places);
+    }//*/
+    document.getElementById("field1").value = ('Hole ' + Count);
+}
+
+function PreviousHole(){
+    //scene.parentElement.removeChild(scene);
+    //resetPlaces();
+    Count--;
+    if(Count < 1){
+        alert('There is no previous hole!');
+        Count = 1;
+    }
+    else{
+       //renderPlaces(places);
+    }//*/
+    document.getElementById("field1").value = ('Hole ' + Count);
+}
+
+
 window.onload = () => {
     const dbref = ref(db);
     get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((snapshot) =>{
         if (snapshot.exists()){
-            alert(snapshot.val.lat());
+            alert("Test");
         }
     });
+
     const scene = document.querySelector('a-scene');
-
-    // first get current user location
     return navigator.geolocation.getCurrentPosition(function (position) {
-
-        // than use it to load from remote APIs some places nearby
         loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
                 places.forEach((place) => {
                     const latitude = place.location.lat;
                     const longitude = place.location.lng;
-
-                    // add place name
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
@@ -79,7 +104,6 @@ window.onload = () => {
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
-
                     scene.appendChild(text);
                 });
             })
