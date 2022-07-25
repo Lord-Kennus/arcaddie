@@ -1,8 +1,8 @@
-const loadPlaces = function (coords) {
-    return loadPlaceStatic();
+const POI = function (coords) {
+    return LoadPOI();
 };
 
-function loadPlaceStatic() {
+function LoadPOI() {
     const PLACES = [
         {
             name: 'Hole 1',
@@ -50,12 +50,39 @@ function loadPlaceStatic() {
     })
 }
 
+function NextHole(){
+    //scene.parentElement.removeChild(scene);
+    //resetPlaces();
+    Count++;
+    if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
+        alert('You are finished!');
+    }
+    else{
+      //  renderPlaces(places);
+    }
+    div.innerText = ("Hole" + Count);
+}
 
+function PreviousHole(){
+    //scene.parentElement.removeChild(scene);
+    //resetPlaces();
+    Count--;
+    alert('Hole', Count);
+    if(Count < 1){
+        alert('There is no previous hole!');
+        Count = 1;
+    }
+    else{
+        //renderPlaces(places);
+    }
+    div.innerText = ("Hole" + Count);
+}
 
 window.onload = () => {
     const scene = document.querySelector('a-scene');
+    document.getElementById('Hole').innerHTML = ('Hole' + Count);
     return navigator.geolocation.getCurrentPosition(function (position) {
-        loadPlaces(position.coords)
+        POI(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
                 places.forEach((place) => {

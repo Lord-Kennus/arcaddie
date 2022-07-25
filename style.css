@@ -48,3 +48,67 @@ div.debug {
     font-size: 1.5em;
     border-radius: 5px;
 }
+
+.centered {
+    height: 20%;
+    justify-content: center;
+    position: fixed;
+    bottom: 0%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0px auto;
+    left: 0;
+    right: 0;
+}
+
+.top {
+    height: 100%;
+    justify-content: center;
+    position: fixed;
+    bottom: 0%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0px auto;
+    left: 0;
+    right: 0;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    border: 2px solid white;
+    background-color: transparent;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 100%;
+    font-size: 2em;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: red;
+    outline: none;
+}
+
+button2 {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    border: 2px solid white;
+    background-color: transparent;
+    width: 2.4em;
+    height: 2.4em;
+    border-radius: 100%;
+    font-size: 2em;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: green;
+    outline: none;
+}
+
+.instructions {
+    position: fixed;
+    top: 5%;
+    font-size: 1.25em;
+    color: blue;
+    z-index: 999999;
+}
