@@ -9,7 +9,7 @@ div.debug {
     z-index: 1;
     width: 100%;
     background-color: rgba(1, 1, 1, 0.2);
-    color: #ff7500;
+    color: #00f7ff;
     font-size: 0.75em;
     padding: 0.5em;
     width: initial;
@@ -24,7 +24,7 @@ div.debug {
     width: 80%;
     margin: 1em;
     padding: 0.25em;
-    color: #ff7500;
+    color: #00f7ff;
     font-size: 0.75em;
     text-align: center;
     background-color: white;
@@ -42,7 +42,7 @@ div.debug {
 #place-label > span {
     z-index: 99999;
     padding: 0.25em;
-    color: #ff7500;
+    color: #00f7ff;
     text-align: center;
     background-color: white;
     font-size: 1.5em;
@@ -87,21 +87,6 @@ button {
     font-size: 2em;
     background-color: rgba(0, 0, 0, 0.4);
     color: red;
-    outline: none;
-}
-
-button2 {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    border: 2px solid white;
-    background-color: transparent;
-    width: 2.4em;
-    height: 2.4em;
-    border-radius: 100%;
-    font-size: 2em;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: green;
     outline: none;
 }
 

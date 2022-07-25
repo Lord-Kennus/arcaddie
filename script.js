@@ -19,27 +19,6 @@ function loadPlaceStatic() {
                 lng: -6.452037,
             }
         },
-        {
-            name: 'River',
-            location: {
-                lat: 55.086073,
-                lng: -6.450320,
-        }
-        },
-        {
-            name: 'Bank',
-            location: {
-                lat: 55.084108,
-                lng: -6.453605,
-            }
-        },
-        {
-            name: 'Test',
-            location: {
-                lat: 55.084108,
-                lng: -6.451071,
-            }
-        },
     ];
 
     return new Promise((resolve, reject) => {
@@ -49,6 +28,61 @@ function loadPlaceStatic() {
             reject(err)
         }
     })
+}
+
+function resetPlaces(){
+    if(PLACES.length > 0){
+        for(const i = 0; i > PLACES.length; i++){
+            PLACES.shift();
+        }
+    }
+}
+
+
+function NextHole(){
+    //scene.parentElement.removeChild(scene);
+    //resetPlaces();
+    Count++;
+    if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
+        alert('You are finished!');
+        Count--;
+    }
+    else{
+      //  renderPlaces(places);
+    }//*/
+    document.getElementById("field1").value = ('Hole ' + Count);
+}
+
+function PreviousHole(){
+    //scene.parentElement.removeChild(scene);
+    //resetPlaces();
+    Count--;
+    if(Count > 1){
+        alert('There is no previous hole!');
+        Count = 1;
+    }
+    else{
+        //renderPlaces(places);
+    }//*/
+    document.getElementById("field1").value = ('Hole ' + Count);
+}
+
+function renderPlaces(){
+    loadPlaces(position.coords)
+            .then((places) => {
+                places.forEach((place) => {
+                    const latitude = place.location.lat;
+                    const longitude = place.location.lng;
+                    const text = document.createElement('a-link');
+                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                    text.setAttribute('title', place.name);
+                    text.setAttribute('scale', '13 13 13');
+                    text.addEventListener('loaded', () => {
+                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+                    });
+                    scene.appendChild(text);
+                });
+            })
 }
 
 window.onload = () => {
