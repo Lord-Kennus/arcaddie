@@ -1,27 +1,7 @@
-
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
-/*
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, child, update, remove, get } from "firebase/database";
 
-const firebaseConfig = {
-    databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app/",
-};
-
-const firebaseConfig = {
- apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
- authDomain: "golfar-ce0b6.firebaseapp.com",
- databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app",
- projectId: "golfar-ce0b6",
- storageBucket: "golfar-ce0b6.appspot.com",
- messagingSenderId: "41881550667",
- appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-*/
 // get the static places
 function loadPlaceStatic() {
     const PLACES = [
@@ -49,7 +29,8 @@ function loadPlaceStatic() {
         }
     })
 }
-/*
+
+var Count = 1;
 function NextHole(){
     //resetPlaces();
     Count++;
@@ -59,8 +40,8 @@ function NextHole(){
     }
     else{
         //  renderPlaces(places);
-    }
-    getElementById("field1").value = ('Hole ' + Count);
+    }//*/
+    document.getElementById("field1").value = ('Hole ' + Count);
 }
 
 function PreviousHole(){
@@ -73,10 +54,9 @@ function PreviousHole(){
     }
     else{
        //renderPlaces(places);
-    }
+    }//*/
     document.getElementById("field1").value = ('Hole ' + Count);
 }
-*/
 
 function renderPlaces(places) {
     /*
@@ -125,9 +105,7 @@ function renderPlaces(places) {
         scene.appendChild(text);
     });
 }
-
 window.onload = () => {
-    var Count = 1;
     const scene = document.querySelector('a-scene');
 
     // first get current user location
