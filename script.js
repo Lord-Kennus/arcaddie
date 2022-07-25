@@ -2,7 +2,7 @@
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
-
+/*
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set, child, update, remove, get } from "firebase/database";
 
@@ -21,7 +21,7 @@ const firebaseConfig = {
 };
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-
+*/
 // get the static places
 function loadPlaceStatic() {
     const PLACES = [
@@ -49,7 +49,7 @@ function loadPlaceStatic() {
         }
     })
 }
-
+/*
 function NextHole(){
     //resetPlaces();
     Count++;
@@ -59,8 +59,8 @@ function NextHole(){
     }
     else{
         //  renderPlaces(places);
-    }//*/
-    document.getElementById("field1").value = ('Hole ' + Count);
+    }
+    getElementById("field1").value = ('Hole ' + Count);
 }
 
 function PreviousHole(){
@@ -73,10 +73,10 @@ function PreviousHole(){
     }
     else{
        //renderPlaces(places);
-    }//*/
+    }
     document.getElementById("field1").value = ('Hole ' + Count);
 }
-
+*/
 
 function renderPlaces(places) {
     /*
@@ -138,22 +138,6 @@ window.onload = () => {
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
                 renderPlaces(places);
-                /*places.forEach((place) => {
-                    const latitude = place.location.lat;
-                    const longitude = place.location.lng;
-
-                    // add place name
-                    const text = document.createElement('a-link');
-                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-                    text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '10 10 10');
-
-                    text.addEventListener('loaded', () => {
-                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
-                    });
-
-                    scene.appendChild(text);
-                });*/
             })
     },
         (err) => console.error('Error in retrieving position', err),
