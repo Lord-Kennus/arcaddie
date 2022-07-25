@@ -81,12 +81,12 @@ function PreviousHole(){
 
 
 window.onload = () => {
-    const dbref = ref(db);
+    /*const dbref = ref(db);
     get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((snapshot) =>{
         if (snapshot.exists()){
             alert("Test");
         }
-    });
+    });*/
 
     const scene = document.querySelector('a-scene');
     return navigator.geolocation.getCurrentPosition(function (position) {
