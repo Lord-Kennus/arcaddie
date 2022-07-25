@@ -1,68 +1,54 @@
-const loadPlaces = function (coords) {
-    return loadPlaceStatic();
-};
-
-// get the static places
-function loadPlaceStatic() {
-    const PLACES = [
-        {
-            name: 'Hole 2',
-            location: {
-                lat: 55.085435,
-                lng: -6.453691,  
-            }
-        },
-        {
-            name: 'Bunker',
-            location: {
-                lat: 55.085828,
-                lng: -6.452037,
-            }
-        },
-    ];
-
-    return new Promise((resolve, reject) => {
-        try {
-            resolve(PLACES)
-        } catch (err) {
-            reject(err)
-        }
-    })
-}
-
 window.onload = () => {
-    const scene = document.querySelector('a-scene');
-
-    // first get current user location
-    return navigator.geolocation.getCurrentPosition(function (position) {
-
-        // than use it to load from remote APIs some places nearby
-        loadPlaces(position.coords)
-            .then((places) => {
-                alert(position.coords.latitude + " : " + position.coords.longitude);
-                places.forEach((place) => {
-                    const latitude = place.location.lat;
-                    const longitude = place.location.lng;
-
-                    // add place name
-                    const text = document.createElement('a-link');
-                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-                    text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '10 10 10');
-
-                    text.addEventListener('loaded', () => {
-                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
-                    });
-
-                    scene.appendChild(text);
+    let testEntitiesAdded = false;
+    alert('If testing the lat/lon manual input on a mobile device, please turn off your GPS to avoid the real location being detected.');
+    const el = document.querySelector("[gps-new-camera]");
+    el.addEventListener("gps-camera-update-position", e => {
+        if(!testEntitiesAdded) {
+            alert(`Got first GPS position: lon ${e.detail.position.longitude} lat ${e.detail.position.latitude}`);
+            // Add four boxes to the north (red), south (yellow), west (blue)
+            // and east (red) of the initial GPS position
+            const properties = [{
+                    color: 'red',
+                    latDis: 0.001,
+                    lonDis: 0
+                },{
+                    color: 'yellow',
+                    latDis: -0.001,
+                    lonDis: 0
+                },{
+                    color: 'blue',
+                    latDis: 0,
+                    lonDis: -0.001
+                },{
+                    color: 'green',
+                    latDis: 0,
+                    lonDis: 0.001
+                }
+            ];
+            for(const prop of properties) {
+                const entity = document.createElement("a-box");
+                entity.setAttribute("scale", {
+                    x: 20, 
+                    y: 20,
+                    z: 20
                 });
-            })
-    },
-        (err) => console.error('Error in retrieving position', err),
-        {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-            timeout: 27000,
+                entity.setAttribute('material', { color: prop.color } );
+                entity.setAttribute('gps-new-entity-place', {
+                    latitude: e.detail.position.latitude + prop.latDis,
+                    longitude: e.detail.position.longitude + prop.lonDis
+                });
+                
+                document.querySelector("a-scene").appendChild(entity);
+            }
+            testEntitiesAdded = true;
         }
-    );
+    });
+
+    document.getElementById("go").addEventListener("click", e=> {
+        const lat = document.getElementById('lat').value;
+        const lon = document.getElementById('lon').value;
+        const minacc = document.getElementById('minacc').value;
+
+        el.setAttribute('gps-new-camera', { simulateLatitude: lat, simulateLongitude: lon, positionMinAccuracy: minacc } );
+    });
 };
