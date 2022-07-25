@@ -51,8 +51,9 @@ function loadPlaceStatic() {
 
 window.onload = () => {
     const dbref = ref(db);
-    let ret = get(child(dbref,"Gracehill Golf Course/Hole1P";
-    alert("Hello "+ ret);
+    get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((HoleSnap) =>{
+        alert(HoleSnap);
+    });
     const scene = document.querySelector('a-scene');
 
     // first get current user location
