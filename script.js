@@ -1,10 +1,9 @@
 var Count = 1;
-
-const POI = function (coords) {
-    return LoadPOI();
+const loadPlaces = function (coords) {
+    return loadPlaceStatic();
 };
 
-function LoadPOI() {
+function loadPlaceStatic() {
     const PLACES = [
         {
             name: 'Hole 1',
@@ -14,28 +13,28 @@ function LoadPOI() {
             }
         },
         {
-            name: 'Hole 2',
+            name: 'Bunker',
             location: {
                 lat: 55.085828,
                 lng: -6.452037,
             }
         },
         {
-            name: 'Hole 3',
+            name: 'River',
             location: {
                 lat: 55.086073,
                 lng: -6.450320,
         }
         },
         {
-            name: 'Hole 4',
+            name: 'Bank',
             location: {
                 lat: 55.084108,
                 lng: -6.453605,
             }
         },
         {
-            name: 'Hole 5',
+            name: 'Test',
             location: {
                 lat: 55.084108,
                 lng: -6.451071,
@@ -52,39 +51,10 @@ function LoadPOI() {
     })
 }
 
-function NextHole(){
-    //scene.parentElement.removeChild(scene);
-    //resetPlaces();
-    Count++;
-    if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
-        alert('You are finished!');
-        Count--;
-    }
-    else{
-      //  renderPlaces(places);
-    }//*/
-    document.getElementById("field1").value = ('Hole ' + Count);
-}
-
-function PreviousHole(){
-    //scene.parentElement.removeChild(scene);
-    //resetPlaces();
-    Count--;
-    if(Count < 1){
-        alert('There is no previous hole!');
-        Count = 1;
-    }
-    else{
-        //renderPlaces(places);
-    }//*/
-    document.getElementById("field1").value = ('Hole ' + Count);
-}
-
 window.onload = () => {
     const scene = document.querySelector('a-scene');
-    document.getElementById('Hole').innerHTML = ('Hole' + Count);
     return navigator.geolocation.getCurrentPosition(function (position) {
-        POI(position.coords)
+        loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
                 places.forEach((place) => {
@@ -93,27 +63,10 @@ window.onload = () => {
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '10 10 10');
-
+                    text.setAttribute('scale', '13 13 13');
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
-                    
-                    /*document.querySelector('button2[data-action="next"]').addEventListener('click', function () {
-                        //var entity = document.querySelector('[gps-entity-place]');
-                        Count++;
-                        //NextHole();
-                        document.getElementById("field1").value = ('Hole ' + Count);
-                        
-                    });
-                    document.querySelector('button[data-action="back"]').addEventListener('click', function () {
-                        //var entity = document.querySelector('[gps-entity-place]');
-                        Count--;
-                        //PreviousHole();
-                        document.getElementById("field1").value = ('Hole ' + Count);
-                    });*/
-            
-
                     scene.appendChild(text);
                 });
             })
