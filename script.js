@@ -1,11 +1,13 @@
 var Count = 1;
+const PLACES;
 const scene = document.querySelector('a-scene');
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
+let places = loadPlaces();
 
 function loadPlaceStatic() {
-    const PLACES = [
+    PLACES = [
         {
             name: 'Hole 2',
             location: {
@@ -74,7 +76,7 @@ function PreviousHole(){
     document.getElementById("field1").value = ('Hole ' + Count);
 }
 
-/*
+
 function resetPlaces(){
     if(PLACES.length > 0){
         for(const i = 0; i > PLACES.length; i++){
@@ -83,11 +85,32 @@ function resetPlaces(){
     }
 }
 
-function renderPlaces(){
+function renderPlaces(places) {
+    let scene = document.querySelector('a-scene');
 
-    loadPlaces(position.coords)
+    places.forEach((place) => {
+        let latitude = place.location.lat;
+        let longitude = place.location.lng;
+
+        let text = document.createElement('a-link');
+        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+        text.setAttribute('title', place.name);
+        text.setAttribute('scale', '10 10 10');
+
+        text.addEventListener('loaded', () => {
+            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded', { detail: { component: this.el }}))
+        });
+        scene.appendChild(text);
+    });
+}
+
+window.onload = () => {
+    return navigator.geolocation.getCurrentPosition(function (position) {
+        loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
+                renderPlaces(places);
+                /*
                 places.forEach((place) => {
                     const latitude = place.location.lat;
                     const longitude = place.location.lng;
@@ -100,27 +123,7 @@ function renderPlaces(){
                     });
                     scene.appendChild(text);
                 });
-}//*/
-
-window.onload = () => {
-    return navigator.geolocation.getCurrentPosition(function (position) {
-        loadPlaces(position.coords)
-            .then((places) => {
-                alert(position.coords.latitude + " : " + position.coords.longitude);
-                //renderPlaces();
-                ///*
-                places.forEach((place) => {
-                    const latitude = place.location.lat;
-                    const longitude = place.location.lng;
-                    const text = document.createElement('a-link');
-                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-                    text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '8 8 8');
-                    text.addEventListener('loaded', () => {
-                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
-                    });
-                    scene.appendChild(text);
-                });//*/
+                //*/
                 /*// Need to tweak for distance
                     const camera = document.querySelector('[camera]');
                     const marker = document.querySelector('a-marker'); //'a-link'
