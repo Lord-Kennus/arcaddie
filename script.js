@@ -51,7 +51,7 @@ function loadPlaceStatic() {
 }
 
 // ------------------------------------BUTTON FUNCTIONS--------------------------------
-
+/*
 function NextHole(){
     //resetPlaces();
     Count++;
@@ -61,7 +61,7 @@ function NextHole(){
     }
     else{
         //  renderPlaces(places);
-    }//*/
+    }
     document.getElementById("field1").value = ('Hole ' + Count);
 }
 
@@ -75,9 +75,9 @@ function PreviousHole(){
     }
     else{
        //renderPlaces(places);
-    }//*/
+    }
     document.getElementById("field1").value = ('Hole ' + Count);
-}
+}*/
 
 
 window.onload = () => {
