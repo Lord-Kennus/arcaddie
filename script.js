@@ -1,4 +1,4 @@
-var Count = 0;
+var Count = 1;
 
 const POI = function (coords) {
     return LoadPOI();
@@ -56,7 +56,7 @@ function NextHole(){
     //scene.parentElement.removeChild(scene);
     //resetPlaces();
     Count++;
-    /*if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
+    if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
         alert('You are finished!');
     }
     else{
@@ -69,7 +69,7 @@ function PreviousHole(){
     //scene.parentElement.removeChild(scene);
     //resetPlaces();
     Count--;
-    /*if(Count < 1){
+    if(Count < 1){
         alert('There is no previous hole!');
         Count = 1;
     }
