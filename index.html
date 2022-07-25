@@ -10,10 +10,7 @@
         THREEx.ArToolkitContext.baseURL = 'https://raw.githack.com/jeromeetienne/ar.js/master/three.js/'
     </script>
 </head>
-
 <link rel="stylesheet" href="./style.css">
-
-<!-- Dynamically add places from Javascript -->
 <script src="./script.js"></script>
 
 <body style='margin: 0; overflow: hidden;'>
@@ -22,7 +19,7 @@
         embedded
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'
         >
-        <a-camera arjs-look-controls='smoothingFactor: 0.1' gps-camera rotation-reader>
+        <a-camera gps-camera rotation-reader>
 		</a-camera>
     </a-scene>
     
@@ -32,5 +29,6 @@
         <div class="centered">
               <button onclick="PreviousHole()">Back</button>
               <button onclick="NextHole()">Next</button>
-          </div>
+    </div>
+
 </body>
