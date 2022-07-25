@@ -40,7 +40,7 @@ function resetPlaces(){
 
 
 function NextHole(){
-    scene.parentElement.removeChild(scene);
+    scene = null;
     //resetPlaces();
     Count++;
     if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
