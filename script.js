@@ -30,6 +30,13 @@ function loadPlaceStatic() {
         }
     })
 }
+/*
+const dbref = ref(db);
+    get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((HoleSnap)=>{
+        const PLACES;
+        PLACES.push(HoleSnap);
+    });
+//*/
 
 function resetPlaces(){
     if(PLACES.length > 0){
