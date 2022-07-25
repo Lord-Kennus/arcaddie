@@ -43,12 +43,13 @@ function NextHole(){
     //scene.parentElement.removeChild(scene);
     //resetPlaces();
     Count++;
-    if (Count <= 18){  // Future change, Count <= Hole + if statement checking if it reads it
-        alert('You are finished!');
-        Count--;
+    if (Count < 19){  // Future change, Count <= Hole + if statement checking if it reads it
+        ;//  renderPlaces(places);
     }
     else{
-      //  renderPlaces(places);
+        alert('You are finished!');
+        Count--;
+      
     }//*/
     document.getElementById("field1").value = ('Hole ' + Count);
 }
@@ -57,12 +58,13 @@ function PreviousHole(){
     //scene.parentElement.removeChild(scene);
     //resetPlaces();
     Count--;
-    if(Count > 1){
+    if(Count < 1){
         alert('There is no previous hole!');
         Count = 1;
     }
     else{
-        //renderPlaces(places);
+       //renderPlaces(places);
+        
     }//*/
     document.getElementById("field1").value = ('Hole ' + Count);
 }
