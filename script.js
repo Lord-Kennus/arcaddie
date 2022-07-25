@@ -18,6 +18,7 @@ const firebaseConfig = {
  messagingSenderId: "41881550667",
  appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
 };
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
@@ -51,8 +52,10 @@ function loadPlaceStatic() {
 
 window.onload = () => {
     const dbref = ref(db);
-    get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((HoleSnap) =>{
-        alert(HoleSnap);
+    get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((snapshot) =>{
+        if (snapshot.exists()){
+            alert(snapshot.val.lat());
+        }
     });
     const scene = document.querySelector('a-scene');
 
