@@ -97,18 +97,18 @@ window.onload = () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
                     
-                    document.querySelector('button2[data-action="Next"]').addEventListener('click', function () {
+                    document.querySelector('button2[data-action="next"]').addEventListener('click', function () {
                         //var entity = document.querySelector('[gps-entity-place]');
                         Count++;
                         //NextHole();
-                        div.innerText.value = ("Hole" + Count);
+                        document.getElementById("field1").value = ('Hole ' + Count);
                         
                     });
-                    document.querySelector('button[data-action="Back"]').addEventListener('click', function () {
+                    document.querySelector('button[data-action="back"]').addEventListener('click', function () {
                         //var entity = document.querySelector('[gps-entity-place]');
                         Count--;
                         //PreviousHole();
-                        div.innerText.value = ("Hole" + Count);
+                        document.getElementById("field1").value = ('Hole ' + Count);
                     });
             
 
