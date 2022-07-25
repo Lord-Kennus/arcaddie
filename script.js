@@ -30,81 +30,6 @@ function loadPlaceStatic() {
     })
 }
 
-var Count = 1;
-function NextHole(){
-    //resetPlaces();
-    Count++;
-    if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
-        alert('You are finished!');
-        Count--;
-    }
-    else{
-        //  renderPlaces(places);
-    }//*/
-    document.getElementById("field1").value = ('Hole ' + Count);
-}
-
-function PreviousHole(){
-    //scene.parentElement.removeChild(scene);
-    //resetPlaces();
-    Count--;
-    if(Count < 1){
-        alert('There is no previous hole!');
-        Count = 1;
-    }
-    else{
-       //renderPlaces(places);
-    }//*/
-    document.getElementById("field1").value = ('Hole ' + Count);
-}
-
-function renderPlaces(places) {
-    /*
-    let scene = document.querySelector('a-scene');
-    for(let j = 0; j < scene.children.length(); j++){
-        scene.removeChild(scene.lastChild);
-    }//*/
-    places.forEach((place) => {
-        let name = place.name();
-        let latitude = place.location.lat;  // place.lat;
-        let longitude = place.location.lng; //place.lng;
-
-        let text = document.createElement('a-link');
-        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-        text.setAttribute('title', place.name);
-        text.setAttribute('scale', '10 10 10');
-
-        text.addEventListener('loaded', () => {
-            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded', { detail: { component: this.el }}))
-        });
-        /*  Click Event for Distance
-                    const clickListener = function(ev) {
-                        ev.stopPropagation();
-                        ev.preventDefault();
-                        const distanceMsg = document.querySelector('[gps-entity-place]').getAttribute('distanceMsg');
-                        // const distanceMsg = calcDist(place.location.lat,place.location.lng)
-                        const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-                        if (el && el === ev.target) {
-                            const label = document.createElement('span');
-                            const container = document.createElement('div');
-                            container.setAttribute('id', 'place-dist');
-                            alert(distanceMsg);
-                            container.appendChild(label);
-                            document.body.appendChild(container);
-                            
-                            setTimeout(() => {
-                                container.parentElement.removeChild(container);
-                            }, 1500);
-                        }
-                    };
-
-                    text.addEventListener('click', clickListener);
-                    //*/
-
-        scene.appendChild(text);
-    });
-}
 window.onload = () => {
     const scene = document.querySelector('a-scene');
 
@@ -118,13 +43,17 @@ window.onload = () => {
                 places.forEach((place) => {
                     const latitude = place.location.lat;
                     const longitude = place.location.lng;
+
+                    // add place name
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '8 8 8');
+                    text.setAttribute('scale', '10 10 10');
+
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
+
                     scene.appendChild(text);
                 });
             })
