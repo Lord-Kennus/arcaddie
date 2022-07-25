@@ -79,6 +79,7 @@ function PreviousHole(){
 }
 
 window.onload = () => {
+    var Count = 0;
     const scene = document.querySelector('a-scene');
     document.getElementById('Hole').innerHTML = ('Hole' + Count);
     return navigator.geolocation.getCurrentPosition(function (position) {
