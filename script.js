@@ -43,7 +43,7 @@ function NextHole(){
     //scene.parentElement.removeChild(scene);
     //resetPlaces();
     Count++;
-    if (Count < 19){  // Future change, Count <= Hole + if statement checking if it reads it
+    if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
         ;//  renderPlaces(places);
     }
     else{
@@ -78,7 +78,7 @@ function renderPlaces(){
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '13 13 13');
+                    text.setAttribute('scale', '8 8 8');
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
@@ -99,7 +99,7 @@ window.onload = () => {
                     const text = document.createElement('a-link');
                     text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
                     text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '13 13 13');
+                    text.setAttribute('scale', '8 8 8');
                     text.addEventListener('loaded', () => {
                         window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
                     });
