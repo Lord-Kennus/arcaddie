@@ -1,6 +1,25 @@
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
+// ------------------------------------FIREBASE--------------------------------
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, child, update, remove, get } from "firebase/database";
+
+const firebaseConfig = {
+    databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app/",
+};
+
+const firebaseConfig = {
+ apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
+ authDomain: "golfar-ce0b6.firebaseapp.com",
+ databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app",
+ projectId: "golfar-ce0b6",
+ storageBucket: "golfar-ce0b6.appspot.com",
+ messagingSenderId: "41881550667",
+ appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 // get the static places
 function loadPlaceStatic() {
@@ -31,6 +50,8 @@ function loadPlaceStatic() {
 }
 
 window.onload = () => {
+    const dbref = ref(db);
+    alert(get(child(dbref,"Gracehill Golf Course/Hole1P")));
     const scene = document.querySelector('a-scene');
 
     // first get current user location
