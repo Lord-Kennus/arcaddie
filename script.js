@@ -7,7 +7,7 @@ const loadPlaces = function (coords) {
 function loadPlaceStatic() {
     const PLACES = [
         {
-            name: 'Hole 1',
+            name: 'Hole 2',
             location: {
                 lat: 55.085435,
                 lng: -6.453691,  
@@ -67,27 +67,18 @@ function PreviousHole(){
     document.getElementById("field1").value = ('Hole ' + Count);
 }
 
-function renderPlaces(){
-    loadPlaces(position.coords)
-            .then((places) => {
-                places.forEach((place) => {
-                    const latitude = place.location.lat;
-                    const longitude = place.location.lng;
-                    const text = document.createElement('a-link');
-                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-                    text.setAttribute('title', place.name);
-                    text.setAttribute('scale', '8 8 8');
-                    text.addEventListener('loaded', () => {
-                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
-                    });
-                    scene.appendChild(text);
-                });
-            });
+/*
+function resetPlaces(){
+    if(PLACES.length > 0){
+        for(const i = 0; i > PLACES.length; i++){
+            PLACES.shift();
+        }
+    }
 }
 
-window.onload = () => {
-    return navigator.geolocation.getCurrentPosition(function (position) {
-        loadPlaces(position.coords)
+function renderPlaces(){
+
+    loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
                 places.forEach((place) => {
@@ -102,8 +93,51 @@ window.onload = () => {
                     });
                     scene.appendChild(text);
                 });
+}//*/
+
+window.onload = () => {
+    return navigator.geolocation.getCurrentPosition(function (position) {
+        loadPlaces(position.coords)
+            .then((places) => {
+                alert(position.coords.latitude + " : " + position.coords.longitude);
+                //renderPlaces();
+                ///*
+                places.forEach((place) => {
+                    const latitude = place.location.lat;
+                    const longitude = place.location.lng;
+                    const text = document.createElement('a-link');
+                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                    text.setAttribute('title', place.name);
+                    text.setAttribute('scale', '8 8 8');
+                    text.addEventListener('loaded', () => {
+                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+                    });
+                    scene.appendChild(text);
+                });//*/
+                /*// Need to tweak for distance
+                    const camera = document.querySelector('[camera]');
+                    const marker = document.querySelector('a-marker'); //'a-link'
+                    let check;
+
+                    marker.addEventListener('markerFound', () => {
+                        let cameraPosition = camera.object3D.position;
+                        let markerPosition = marker.object3D.position;
+                        let distance = cameraPosition.distanceTo(markerPosition)
+ 
+                        check = setInterval(() => {
+                            cameraPosition = camera.object3D.position;
+                            markerPosition = marker.object3D.position;
+                            distance = cameraPosition.distanceTo(markerPosition)
+
+                            // do what you want with the distance:
+                            console.log(distance);
+                        }, 100);
+                    });
+                marker.addEventListener('markerLost', () => {
+                clearInterval(check);
+                })//*/
             })
-    },
+        },
         (err) => console.error('Error in retrieving position', err),
         {
             enableHighAccuracy: true,

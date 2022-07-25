@@ -12,8 +12,6 @@
 </head>
 
 <link rel="stylesheet" href="./style.css">
-
-<!-- Dynamically add places from Javascript -->
 <script src="./script.js"></script>
 
 <body style='margin: 0; overflow: hidden;'>
@@ -22,7 +20,7 @@
         embedded
         arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'
         >
-        <a-camera arjs-look-controls='smoothingFactor: 10' gps-camera rotation-reader>
+        <a-camera look-controls-enabled='false' arjs-look-controls='smoothingFactor: 0.1' gps-camera rotation-reader>
 		</a-camera>
     </a-scene>
     
