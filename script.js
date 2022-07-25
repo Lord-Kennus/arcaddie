@@ -164,6 +164,7 @@ function PreviousHole(){
 // ------------------------------------ON PAGE LOAD--------------------------------
 
 window.onload = () => {
+    alert(get(child(dbref,"Gracehill Golf Course/Hole1P")));
     return navigator.geolocation.getCurrentPosition(function (position) {
         loadPlaces(position.coords)
             .then((places) => {
