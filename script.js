@@ -6,17 +6,17 @@ const loadPlaces = function (coords) {
 function loadPlaceStatic() {
     const PLACES = [
         {
-            name: 'Hole 2',
+            name: 'Hole',
             location: {
-                lat: 55.085435,
-                lng: -6.453691,  
+                lat: 55.085087,
+                lng: -6.453370,  
             }
         },
         {
-            name: 'Bunker',
+            name: 'Tee',
             location: {
-                lat: 55.085828,
-                lng: -6.452037,
+                lat: 55.084894,
+                lng: -6.453338,
             }
         },
     ];
