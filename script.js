@@ -26,6 +26,8 @@ const loadPlaces = function (coords) {
 
 
 function loadPlaceStatic() {
+    //  https://www.mscorecard.com/mscorecard/coordinates.php?cid=141519640570836077_1_2
+
     ///*
     const PLACES = [
         {
