@@ -1,8 +1,32 @@
+// ------------------------------------FIREBASE--------------------------------
+/*
+import { initializeApp } from "firebase/app";
+import { getDatabase, ref, set, child, update, remove, get } from "firebase/database";
+
+const firebaseConfig = {
+    databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app/",
+};
+
+const firebaseConfig = {
+ apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
+ authDomain: "golfar-ce0b6.firebaseapp.com",
+ databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app",
+ projectId: "golfar-ce0b6",
+ storageBucket: "golfar-ce0b6.appspot.com",
+ messagingSenderId: "41881550667",
+ appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
+*/
+
 
 function loadPlaceStatic() {
+    ///*
     const PLACES = [
         {
             name: 'Hole',
@@ -18,8 +42,14 @@ function loadPlaceStatic() {
                 lng: -6.453338,
             }
         },
-    ];
-
+    ];//*/
+    /*
+        const dbref = ref(db);
+            get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((snapshot)=>{
+                const PLACES;
+                PLACES.push(snapshot);
+            });
+        //*/
     return new Promise((resolve, reject) => {
         try {
             resolve(PLACES)
@@ -27,6 +57,14 @@ function loadPlaceStatic() {
             reject(err)
         }
     })
+}
+
+function resetPlaces(){
+    if(PLACES.length > 0){
+        for(let i = 0; i > PLACES.length; i++){
+            PLACES.shift();
+        }
+    }
 }
 
 function removeMarkers(){
@@ -53,6 +91,24 @@ function renderPlaces(places) {
         scene.appendChild(text);
     });
 }
+
+// ------------------------------------DISTANCE--------------------------------
+
+const calcDist = function(lat2, lon2){
+    const R = 6371e3; 
+    const φ1 = position.coords.latitude * Math.PI/180;
+    const φ2 = position.coords.longitude * Math.PI/180;
+    const Δφ = (lat2-lat1) * Math.PI/180;
+    const Δλ = (lon2-lon1) * Math.PI/180;
+
+    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
+          Math.cos(φ1) * Math.cos(φ2) *
+          Math.sin(Δλ/2) * Math.sin(Δλ/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    const d = R * c;
+    return d;
+} 
 
 // ------------------------------------BUTTON FUNCTIONS--------------------------------
 
