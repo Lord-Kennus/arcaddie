@@ -1,24 +1,18 @@
 <html>
 <head>
 <title>Firebase Authentication</title>
-<link rel="stylesheet" href="cssFile.css">
+<link rel="stylesheet" href="Base.css">
 </head>
-
 <body>
-  
 <div id="login-box">
   <div class="left">
     <h1 id='status'>login</h1>
     <input type="text" id="email" name="email" placeholder="E-mail" />
     <input type="password" id="password" name="password" placeholder="Password" />
-    
     <input type="submit" id='login' name="login" value="Login" />
-
   </div>
-  
   <div class="right">
     <span class="loginwith">Sign in with<br />social network</span>
-    
     <button class="social-signin facebook">Log in with facebook</button>
     <button class="social-signin twitter">Log in with Twitter</button>
     <button class="social-signin google">Log in with Google+</button>
@@ -54,9 +48,7 @@ sighUp.addEventListener('click',(e) => {
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-     // Signed in 
       const user = userCredential.user;
-
       set(ref(database, 'users/' + user.uid),{
           username: username,
           email: email
@@ -64,10 +56,9 @@ sighUp.addEventListener('click',(e) => {
       alert('User Created!');
       document.location.href = newUrl;
     })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
+    .catch((err) => {
+      const errorCode = err.code;
+      const errorMessage = err.message;
       alert(errorMessage);
     });
 });
@@ -85,14 +76,24 @@ sighUp.addEventListener('click',(e) => {
           last_login: dt,
         })
          alert('User Logged In!');
-        document.location.href = newUrl; //put in file location
+        document.location.href = newUrl; // Put in file location
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+      .catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
         alert(errorMessage);
   });
  });
+ 
+logout.addEventListener('click',(e)=>{
+   signOut(auth).then(() => {
+     alert('user loged out');
+   }).catch((err) => {
+     const errorCode = err.code;
+     const errorMessage = err.message;
+        alert(errorMessage);
+   });
+});
 
 const user = auth.currentUser;
 onAuthStateChanged(auth, (user) => {
@@ -107,16 +108,6 @@ onAuthStateChanged(auth, (user) => {
     // ...
     //bla bla bla
   }
-});
-
-logout.addEventListener('click',(e)=>{
-   signOut(auth).then(() => {
-     alert('user loged out');
-   }).catch((error) => {
-     const errorCode = error.code;
-     const errorMessage = error.message;
-        alert(errorMessage);
-   });
 });
 </script>
 </html>
