@@ -1,67 +1,106 @@
-window.onload = () => {
-     let places = staticLoadPlaces();
-     renderPlaces(places);
+const loadPlaces = function (coords) {
+    return loadPlaceStatic();
 };
 
-function staticLoadPlaces() {
-    return [
+function loadPlaceStatic() {
+    const PLACES = [
         {
-            name: 'Hole 2',
+            name: 'Hole',
             location: {
-                lat: 55.085435,
-                lng: -6.453691,  
+                lat: 55.085087,
+                lng: -6.453370,  
             }
         },
         {
-            name: 'Bunker',
+            name: 'Tee',
             location: {
-                lat: 55.085828,
-                lng: -6.452037,
+                lat: 55.084894,
+                lng: -6.453338,
             }
         },
     ];
+
+    return new Promise((resolve, reject) => {
+        try {
+            resolve(PLACES)
+        } catch (err) {
+            reject(err)
+        }
+    })
 }
 
-
+function removeMarkers(){
+    let scene = document.querySelector('a-scene');
+    for(let j = 0; j < scene.children.length(); j++){
+        scene.removeChild(scene.lastChild);
+    }
+}
 
 function renderPlaces(places) {
-    let scene = document.querySelector('a-scene');
-
     places.forEach((place) => {
-        const latitude = place.location.lat;
-        const longitude = place.location.lng;
+        let name = place.name();
+        let latitude = place.location.lat;  // place.lat;
+        let longitude = place.location.lng; //place.lng;
 
-        const icon = document.createElement('a-image');
-        icon.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude}`);
-        icon.setAttribute('name', place.name);
-        icon.setAttribute('src', './assets/map-marker.png');
+        let text = document.createElement('a-link');
+        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+        text.setAttribute('title', place.name);
+        text.setAttribute('scale', '10 10 10');
 
-        icon.setAttribute('scale', '20, 20');
-
-        icon.addEventListener('loaded', () => window.dispatchEvent(new CustomEvent('gps-entity-place-loaded')));
-
-        const clickListener = function (ev) {
-            ev.stopPropagation();
-            ev.preventDefault();
-
-            const name = ev.target.getAttribute('name');
-
-            const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-            if (el && el === ev.target) {
-                const label = document.createElement('span');
-                const container = document.createElement('div');
-                container.setAttribute('id', 'place-label');
-                label.innerText = name;
-                container.appendChild(label);
-                document.body.appendChild(container);
-
-                setTimeout(() => {
-                    container.parentElement.removeChild(container);
-                }, 1500);
-            }
-        };
-        icon.addEventListener('click', clickListener);
-        scene.appendChild(icon);
+        text.addEventListener('loaded', () => {
+            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded', { detail: { component: this.el }}))
+        });
+        scene.appendChild(text);
     });
 }
+
+// ------------------------------------BUTTON FUNCTIONS--------------------------------
+
+var Count = 1;
+function NextHole(){
+    //removeMarkers();
+    //resetPlaces();
+    Count++;
+    if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
+        alert('You are finished!');
+        Count--;
+    }
+    else{
+        //  renderPlaces(places);
+    }//*/
+    document.getElementById("field1").value = ('Hole ' + Count);
+}
+
+function PreviousHole(){
+    //removeMarkers();
+    //resetPlaces();
+    Count--;
+    if(Count < 1){
+        alert('There is no previous hole!');
+        Count = 1;
+    }
+    else{
+       //renderPlaces(places);
+    }//*/
+    document.getElementById("field1").value = ('Hole ' + Count);
+}
+
+// ------------------------------------ON PAGE LOAD--------------------------------
+
+window.onload = () => {
+    const scene = document.querySelector('a-scene');
+    return navigator.geolocation.getCurrentPosition(function (position) {
+        loadPlaces(position.coords)
+            .then((places) => {
+                alert(position.coords.latitude + " : " + position.coords.longitude);
+                renderPlaces(places);
+            })
+    },
+        (err) => console.error('Error in retrieving position', err),
+        {
+            enableHighAccuracy: true,
+            maximumAge: 0,
+            timeout: 27000,
+        }
+    );
+};
