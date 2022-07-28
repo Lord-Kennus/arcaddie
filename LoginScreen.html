@@ -1,27 +1,51 @@
+<!DOCTYPE html>
 <html>
-<head>
-<title>Firebase Authentication</title>
-<link rel="stylesheet" href="Base.css">
-</head>
-<body>
-<div id="login-box">
-  <div class="left">
-    <h1 id='status'>login</h1>
-    <input type="text" id="email" name="email" placeholder="E-mail" />
-    <input type="password" id="password" name="password" placeholder="Password" />
-    <input type="submit" id='login' name="login" value="Login" />
-  </div>
-  <div class="right">
-    <span class="loginwith">Sign in with<br />social network</span>
-    <button class="social-signin facebook">Log in with facebook</button>
-    <button class="social-signin twitter">Log in with Twitter</button>
-    <button class="social-signin google">Log in with Google+</button>
-  </div>
-  <div class="or">OR</div>
-</div>
-</body>
+	<head>
+		<title>Login</title>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="Base.css">
+	</head>
+	<body>
+		<div id="loginContainer">
+			<div class="login-form">
+					<div class="text-center padding-top-100px">
+						<img class="mx-auto d-block margin-bottom-25px" width="100px" src="Assets/logo.png" >
+					</div>
+					<h1 class="text-center light-green-color margin-bottom-25px">Log In</h1> 
+					<div class="form-group ">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text" name="email" class="form-control" placeholder="Email" required="required">
+						</div>
+					</div>
 
-<script type="module">
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<input type="password" name="password" class="form-control" placeholder="*********" required="required">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<button type="submit" id='login' name='login' class="btn btn-success btn-block">
+							<a href="#" class="light-green-color">Sign In</a>
+						</button>
+					</div>
+					<div class="clearfix">
+			            <label class="pull-left checkbox-inline white-color"><input type="checkbox"> Remember me</label>
+			            <a href="#" class="pull-right text-success light-green-color">Forgot Password?</a>
+			        </div>
+				<div class="hint-text">Don't have an account? <a href="#" class="text-success light-green-color">Register Now!</a></div>
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	</body>
+  <script type="module">
+
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
   import { getDatabase } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
   import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
@@ -54,7 +78,7 @@ sighUp.addEventListener('click',(e) => {
           email: email
       })
       alert('User Created!');
-      document.location.href = newUrl;
+      document.location.href = "LoginScreen.html";
     })
     .catch((err) => {
       const errorCode = err.code;
@@ -76,7 +100,7 @@ sighUp.addEventListener('click',(e) => {
           last_login: dt,
         })
          alert('User Logged In!');
-        document.location.href = newUrl; // Put in file location
+        document.location.href = "LoginScreen.html"; // Put in file location
       })
       .catch((err) => {
         const errorCode = err.code;

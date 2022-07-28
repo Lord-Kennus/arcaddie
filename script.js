@@ -24,10 +24,14 @@ const loadPlaces = function (coords) {
 };
 */
 
+var Course
+function loadCourse(){
+    Course = document.getElementById('course').value;
+    document.location.href = "index.html";
+}
 
 function loadPlaceStatic() {
     //  https://www.mscorecard.com/mscorecard/coordinates.php?cid=141519640570836077_1_2
-
     ///*
     const PLACES = [
         {
@@ -47,7 +51,7 @@ function loadPlaceStatic() {
     ];//*/
     /*
         const dbref = ref(db);
-            get(child(dbref,"Gracehill Golf Course/Hole" + Count + "P")).then((snapshot)=>{
+            get(child(dbref, Course + "/Hole" + Count + "P")).then((snapshot)=>{
                 const PLACES;
                 PLACES.push(snapshot);
             });
@@ -79,13 +83,15 @@ function removeMarkers(){
 function renderPlaces(places) {
     places.forEach((place) => {
         let name = place.name();
-        let latitude = place.location.lat;  // place.lat;
-        let longitude = place.location.lng; //place.lng;
+        let latitude = place.location.lat;  
+        //  let latitude = place.lat
+        let longitude = place.location.lng; 
+        //  let longitude = place.lng
 
         let text = document.createElement('a-link');
         text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
         text.setAttribute('title', place.name);
-        text.setAttribute('scale', '10 10 10');
+        text.setAttribute('scale', '3 3 3');
 
         text.addEventListener('loaded', () => {
             window.dispatchEvent(new CustomEvent('gps-entity-place-loaded', { detail: { component: this.el }}))
