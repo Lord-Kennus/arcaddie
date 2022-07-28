@@ -20,6 +20,7 @@ const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
 
+// ------------------------------------PLACES--------------------------------
 
 var Course
 function loadCourse(){
@@ -45,7 +46,7 @@ function loadPlaceStatic() {
             }
         },
     ];
-        /*      Creates array of details from db
+        /*     
         const dbref = ref(db);
             get(child(dbref, Course + "/Hole" + Count + "P")).then((snapshot)=>{
                 snapshot.forEach(addPlace(snapshot));
@@ -96,6 +97,29 @@ function renderPlaces(places) {
         text.addEventListener('loaded', () => {
             window.dispatchEvent(new CustomEvent('gps-entity-place-loaded', { detail: { component: this.el }}))
         });
+            const clickListener = function(ev) {
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        //const distanceMsg = document.querySelector('[gps-entity-place]').getAttribute('distanceMsg');
+                        //const distanceMsg = calcDist(place.lat,place.lng)
+                        const distanceMsg = calcDist(place.location.lat,place.location.lng)
+                        const el = ev.detail.intersection && ev.detail.intersection.object.el;
+
+                        if (el && el === ev.target) {
+                            const label = document.createElement('span');
+                            const container = document.createElement('div');
+                            container.setAttribute('id', 'place-dist');
+                            alert(distanceMsg);
+                            container.appendChild(label);
+                            document.body.appendChild(container);
+                            
+                            setTimeout(() => {
+                                container.parentElement.removeChild(container);
+                            }, 1500);
+                        }
+                    };
+
+                    text.addEventListener('click', clickListener);
         scene.appendChild(text);
     });
 }
@@ -122,30 +146,30 @@ const calcDist = function(lat2, lon2){
 
 var Count = 1;
 function NextHole(){
-    //removeMarkers();
-    //resetPlaces();
+    removeMarkers();
+    resetPlaces();
     Count++;
-    if (Count > 18){  // Future change, Count <= Hole + if statement checking if it reads it
+    if (Count > 18){  // Need to add validation
         alert('You are finished!');
         Count--;
     }
     else{
-        //  renderPlaces(places);
-    }//*/
+        renderPlaces(places);
+    }
     document.getElementById("field1").value = ('Hole ' + Count);
 }
 
 function PreviousHole(){
-    //removeMarkers();
-    //resetPlaces();
+    removeMarkers();
+    resetPlaces();
     Count--;
     if(Count < 1){
         alert('There is no previous hole!');
         Count = 1;
     }
     else{
-       //renderPlaces(places);
-    }//*/
+       renderPlaces(places);
+    }
     document.getElementById("field1").value = ('Hole ' + Count);
 }
 
