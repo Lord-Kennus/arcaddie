@@ -1,161 +1,94 @@
-*:focus {
-  outline: none;
+.light-green-color { color: #95D99B }
+.light-green-bg-color { background-color: #95D99B; }
+.dark-green-color { color: #4D6F50; }
+.dark-green-bg-color { background-color: #4D6F50; }
+.white-color { color: #fff; }
+
+.padding-top-100px {padding-top: 100px;}
+.margin-bottom-25px {margin-bottom: 25px;}
+
+#loginContainer{
+    background-color: #4D6F50;
+    height: 100vh;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  background: #DDD;
-  font-size: 16px;
-  color: #222;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 300;
+.login-form {
+    width: auto;
+    margin: 0 auto;
 }
 
-#login-box {
-  position: relative;
-  margin: 5% auto;
-  width: 600px;
-  height: 400px;
-  background: #FFF;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+.login-form .hint-text {
+    color: #fff;
+    text-align: center;
+    font-size: 0.8em;
 }
 
-.left {
-  position: absolute;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-  padding: 40px;
-  width: 300px;
-  height: 400px;
+.form-control, .btn {
+    min-height: 38px;
+    border-radius: 8px;
 }
 
-h1 {
-  margin: 0 0 20px 0;
-  font-weight: 300;
-  font-size: 28px;
+.login-btn {
+    font-size: 15px;
+    font-weight: bold;
 }
 
-input[type="text"],
-input[type="password"] {
-  display: block;
-  box-sizing: border-box;
-  margin-bottom: 20px;
-  padding: 4px;
-  width: 220px;
-  height: 32px;
-  border: none;
-  border-bottom: 1px solid #AAA;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  transition: 0.2s ease;
+.social-btn {
+
 }
 
-input[type="text"]:focus,
-input[type="password"]:focus {
-  border-bottom: 2px solid #16a085;
-  color: #16a085;
-  transition: 0.2s ease;
+.input-group {
+    background-color: #4D6F50;
+    color: green;
+    border: 2px solid #95D99B;
+    border-radius: 8px;
 }
 
-input[type="submit"] {
-  margin-top: 28px;
-  width: 120px;
-  height: 32px;
-  background: #16a085;
-  border: none;
-  border-radius: 2px;
-  color: #FFF;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  text-transform: uppercase;
-  transition: 0.1s ease;
-  cursor: pointer;
+.input-group {
+    background-color: #4D6F50;
+    color: White;
+    border: 2px solid #95D99B;
+    border-radius: 8px;
 }
 
-input[type="submit"]:hover,
-input[type="submit"]:focus {
-  opacity: 0.8;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  transition: 0.1s ease;
+.input-group input::placeholder {
+    color: #fff;
+    background-color: #4D6F50;
+    font-size: 1em;
 }
 
-input[type="submit"]:active {
-  opacity: 1;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  transition: 0.1s ease;
+.input-group>.custom-select:not(:first-child), 
+.input-group>.form-control:not(:first-child) {
+    color: #fff;
+    background-color: #4D6F50;
+    text-transform: none;
+    font-size: 1em;
+    border: none;
 }
 
-.or {
-  position: absolute;
-  top: 180px;
-  left: 280px;
-  width: 40px;
-  height: 40px;
-  background: #DDD;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  line-height: 40px;
-  text-align: center;
+.input-group-addon .fa {
+    font-size: 18px;
+    padding: 10px;
+    color: #95D99B;
 }
 
-.right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  box-sizing: border-box;
-  padding: 40px;
-  width: 300px;
-  height: 400px;
-  background: url('https://goo.gl/YbktSj');
-  background-size: cover;
-  background-position: center;
-  border-radius: 0 2px 2px 0;
+.form-group {
+    margin-bottom: 1rem;
+    padding-left: 55px;
+    padding-right: 55px;
 }
 
-.right .loginwith {
-  display: block;
-  margin-bottom: 40px;
-  font-size: 28px;
-  color: #FFF;
-  text-align: center;
+.clearfix {
+    padding-left: 55px;
+    padding-right: 55px;
 }
 
-button.social-signin {
-  margin-bottom: 20px;
-  width: 220px;
-  height: 36px;
-  border: none;
-  border-radius: 2px;
-  color: #FFF;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
-  transition: 0.2s ease;
-  cursor: pointer;
-}
-
-button.social-signin:hover,
-button.social-signin:focus {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-  transition: 0.2s ease;
-}
-
-button.social-signin:active {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  transition: 0.2s ease;
-}
-
-button.social-signin.facebook {
-  background: #32508E;
-}
-
-button.social-signin.twitter {
-  background: #55ACEE;
-}
-
-button.social-signin.google {
-  background: #DD4B39;
+.btn-success,
+.btn-success:hover {
+    height: 42px;
+    color: #4D6F50;
+    background-color: #fff;
+    border-color: #4D6F50 !important;
+    text-transform: uppercase;
+    font-size: 1em;
 }
