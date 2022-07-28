@@ -1,11 +1,7 @@
 // ------------------------------------FIREBASE--------------------------------
-/*
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, child, update, remove, get } from "firebase/database";
 
-const firebaseConfig = {
-    databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app/",
-};
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
+import { getDatabase, ref, set, child, update, remove, get } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
 
 const firebaseConfig = {
  apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
@@ -14,6 +10,7 @@ const firebaseConfig = {
  projectId: "golfar-ce0b6",
  storageBucket: "golfar-ce0b6.appspot.com",
  messagingSenderId: "41881550667",
+ databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app/",
  appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
 };
 const app = initializeApp(firebaseConfig);
@@ -22,7 +19,7 @@ const db = getDatabase(app);
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
-*/
+
 
 var Course
 function loadCourse(){
@@ -32,7 +29,6 @@ function loadCourse(){
 
 function loadPlaceStatic() {
     //  https://www.mscorecard.com/mscorecard/coordinates.php?cid=141519640570836077_1_2
-    ///*
     const PLACES = [
         {
             name: 'Hole',
@@ -48,14 +44,14 @@ function loadPlaceStatic() {
                 lng: -6.453338,
             }
         },
-    ];//*/
-    /*
+    ];
+        /*      Creates array of details from db
         const dbref = ref(db);
             get(child(dbref, Course + "/Hole" + Count + "P")).then((snapshot)=>{
-                const PLACES;
-                PLACES.push(snapshot);
+                snapshot.forEach(addPlace(snapshot));
             });
-        //*/
+        */
+
     return new Promise((resolve, reject) => {
         try {
             resolve(PLACES)
@@ -63,6 +59,10 @@ function loadPlaceStatic() {
             reject(err)
         }
     })
+}
+const PLACES;
+function addPlace(Snapshot){
+     PLACES.push(Snapshot.value());
 }
 
 function resetPlaces(){

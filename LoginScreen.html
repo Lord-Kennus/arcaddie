@@ -20,7 +20,14 @@
 							<span class="input-group-addon"><i class="fa fa-user"></i></span>
 							<input type="text" name="email" class="form-control" placeholder="Email" required="required">
 						</div>
-					</div>
+          </div>
+          
+          <div class="form-group ">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="username" class="form-control" placeholder="Username" required="required">
+              </div>
+            </div>
 
 					<div class="form-group">
 						<div class="input-group">
@@ -30,13 +37,13 @@
 					</div>
 
 					<div class="form-group">
-						<button type="submit" id='login' name='login' class="btn btn-success btn-block">
+						<button type="submit" id='login' name='login' class="btn btn-success btn-block" onclick="login()">
 							<a href="#" class="light-green-color">Sign In</a>
 						</button>
 					</div>
 					<div class="clearfix">
 			            <label class="pull-left checkbox-inline white-color"><input type="checkbox"> Remember me</label>
-			            <a href="#" class="pull-right text-success light-green-color">Forgot Password?</a>
+			            <a href="#" class="pull-right text-success light-green-color" onclick="signup()">Forgot Password?</a>
 			        </div>
 				<div class="hint-text">Don't have an account? <a href="#" class="text-success light-green-color">Register Now!</a></div>
 			</div>
@@ -47,8 +54,8 @@
   <script type="module">
 
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
-  import { getDatabase } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
-  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+  import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
   
   const firebaseConfig = {
     apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
@@ -64,7 +71,7 @@
   const database = getDatabase(app);
   const auth = getAuth();
 
-sighUp.addEventListener('click',(e) => {
+function signup(){
 
   var email = document.getElementById('email').value;
   var password = document.getElementById('password').value;
@@ -85,9 +92,9 @@ sighUp.addEventListener('click',(e) => {
       const errorMessage = err.message;
       alert(errorMessage);
     });
-});
+}
 
- login.addEventListener('click',(e)=>{
+ function login(){
    var email = document.getElementById('email').value;
    var password = document.getElementById('password').value;
 
@@ -106,9 +113,9 @@ sighUp.addEventListener('click',(e) => {
         const errorMessage = err.message;
         alert(errorMessage);
   });
- });
- 
-logout.addEventListener('click',(e)=>{
+ }
+//  Unused
+function logout(){
    signOut(auth).then(() => {
      alert('User Logged Out');
    }).catch((err) => {
@@ -116,20 +123,13 @@ logout.addEventListener('click',(e)=>{
      const errorMessage = err.message;
         alert(errorMessage);
    });
-});
+}
 
 const user = auth.currentUser;
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/firebase.User
     const uid = user.uid;
-    //bla bla bla
-    // ...
   } else {
-    // User is signed out
-    // ...
-    //bla bla bla
   }
 });
 </script>
