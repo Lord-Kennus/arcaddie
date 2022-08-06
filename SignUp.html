@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sign Up</title>
+	    <meta charset="UTF-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="Base.css">
+	</head>
+	<body>
+		<div id="loginContainer">
+			<div class="login-form">
+					<div class="text-center padding-top-100px">
+						<img class="mx-auto d-block margin-bottom-25px" width="100px" src="Assets/logo.png" >
+					</div>
+					<h1 class="text-center light-green-color margin-bottom-25px">Sign Up</h1> 
+					<div class="form-group ">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-user"></i></span>
+							<input type="text" name="email" class="form-control" placeholder="Email" required="required">
+						</div>
+          </div>
+          
+          <div class="form-group ">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="username" class="form-control" placeholder="Username">
+              </div>
+            </div>
+
+					<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon"><i class="fa fa-lock"></i></span>
+							<input type="password" name="password" class="form-control" placeholder="*********" required="required">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<button type="submit" id='login' name='login' class="btn btn-success btn-block" onclick="signup()">
+							<a href="#" class="light-green-color">Sign Up</a>
+						</button>
+					</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	</body>
+  <script type="module">
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
+  import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+  
+  const firebaseConfig = {
+    apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
+    authDomain: "golfar-ce0b6.firebaseapp.com",
+    databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "golfar-ce0b6",
+    storageBucket: "golfar-ce0b6.appspot.com",
+    messagingSenderId: "41881550667",
+    appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
+  };
+  
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const auth = getAuth();
+
+function signup(){
+
+  var email = document.getElementById('email').value;
+  var password = document.getElementById('password').value;
+  var username = document.getElementById('username').value;
+
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      set(ref(database, 'users/' + user.uid),{
+          username: username,
+          email: email
+      })
+      alert('User Created!');
+      document.location.href = "LoginScreen.html";
+    })
+    .catch((err) => {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      alert(errorMessage);
+    });
+}
+
+ function login(){
+   var email = document.getElementById('email').value;
+   var password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        const dt = new Date();
+         update(ref(database, 'users/' + user.uid),{
+          last_login: dt,
+        })
+         alert('User Logged In!');
+        document.location.href = "LoginScreen.html";
+      })
+      .catch((err) => {
+        const errorCode = err.code;
+        const errorMessage = err.message;
+        alert(errorMessage);
+  });
+ }
+//  Unused
+function logout(){
+   signOut(auth).then(() => {
+     alert('User Logged Out');
+   }).catch((err) => {
+     const errorCode = err.code;
+     const errorMessage = err.message;
+        alert(errorMessage);
+   });
+}
+
+const user = auth.currentUser;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+  } else {
+  }
+});
+</script>
+</html>
