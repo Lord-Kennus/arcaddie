@@ -52,8 +52,8 @@ function signup(){
 
  function login(){
 
-   var email = document.getElementById("email");
-    var password  = document.getElementById("password");
+   var email = document.getElementById("email").value;
+    var password  = document.getElementById("password").value;
 
     if(email == "" || password == ""){
 			alert("Missing the either Username,Password or Email");
@@ -94,3 +94,4 @@ onAuthStateChanged(auth, (user) => {
   } else {
   }
 });
+
