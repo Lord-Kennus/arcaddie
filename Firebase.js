@@ -18,11 +18,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase
 
 function signup(){
 
-  var email = document.getElementById('email').value;
-  var password = document.getElementById('password').value;
-  var username = document.getElementById('username').value;
+  var sEmail = document.getElementById('semail').value;
+  var sPassword = document.getElementById('spassword').value;
+  var pass2 = document.getElementById('pass2').value;
 
-  createUserWithEmailAndPassword(auth, email, password)
+  /*createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       set(ref(database, 'users/' + user.uid),{
@@ -36,14 +36,38 @@ function signup(){
       const errorCode = err.code;
       const errorMessage = err.message;
       alert(errorMessage);
-    });
+    });*/
+
+  if(sEmail == "" || sPassword == "" || pass2 == ""){
+			alert("One or more boxes are empty!");
+			return;
+	}
+	
+	if(sPassword != pass2){
+		alert("Both Passwords need to be the same");
+		return;
+  }
+  const promise = auth.createUserWithEmailAndPassword(sEmail.value, sPassword.value);
+  promise.catch(e=>alert(e.message));
+  alert("SignUp Successful")
+  document.location.href = "/Assets/Pages/ListScreen.html";
+	
 }
 
  function login(){
-   var email = document.getElementById('email').value;
-   var password = document.getElementById('password').value;
 
-      signInWithEmailAndPassword(auth, email, password)
+   var email = document.getElementById("email");
+    var password  = document.getElementById("password");
+
+    if(email == "" || password == ""){
+			alert("Missing the either Username,Password or Email");
+			return;
+	}
+    const promise = auth.signInWithEmailAndPassword(email.value,password.value);
+    promise.catch(e=>alert(e.message));
+    document.location.href = "/Assets/Pages/ListScreen.html";
+
+    /*  signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         const dt = new Date();
@@ -57,17 +81,13 @@ function signup(){
         const errorCode = err.code;
         const errorMessage = err.message;
         alert(errorMessage);
-  });
+  });*/
  }
+ 
 //  Unused
 function logout(){
-   signOut(auth).then(() => {
-     alert('User Logged Out');
-   }).catch((err) => {
-     const errorCode = err.code;
-     const errorMessage = err.message;
-        alert(errorMessage);
-   });
+  auth.signOut();
+  alert("SignOut Successfully from System");
 }
 
 const user = auth.currentUser;
