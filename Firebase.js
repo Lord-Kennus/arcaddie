@@ -41,7 +41,7 @@ function signup(){
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       alert('User Created!');
-      document.location.href = "LoginScreen.html";
+      document.location.href = "/Assets/Pages/ListScreen.html";
     })
     .catch((err) => {
       const errorCode = err.code;
@@ -68,13 +68,17 @@ function signup(){
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
          alert('User Logged In!');
-        document.location.href = "LoginScreen.html";
+         document.location.href = "/Assets/Pages/ListScreen.html";
       })
       .catch((err) => {
         const errorCode = err.code;
         const errorMessage = err.message;
         alert(errorMessage);
   });//*/
+ }
+
+ function register(){
+  document.location.href = "/Assets/Pages/SignUp.html";
  }
 
 //  Unused
