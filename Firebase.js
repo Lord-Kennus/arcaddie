@@ -22,22 +22,6 @@ function signup(){
   var sPassword = document.getElementById('spassword').value;
   var pass2 = document.getElementById('pass2').value;
 
-  /*createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      set(ref(database, 'users/' + user.uid),{
-          username: username,
-          email: email
-      })
-      alert('User Created!');
-      document.location.href = "LoginScreen.html";
-    })
-    .catch((err) => {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      alert(errorMessage);
-    });*/
-
   if(sEmail == "" || sPassword == "" || pass2 == ""){
 			alert("One or more boxes are empty!");
 			return;
@@ -47,11 +31,23 @@ function signup(){
 		alert("Both Passwords need to be the same");
 		return;
   }
-  const promise = auth.createUserWithEmailAndPassword(sEmail.value, sPassword.value);
+
+  /*const promise = auth.createUserWithEmailAndPassword(sEmail.value, sPassword.value);
   promise.catch(e=>alert(e.message));
   alert("SignUp Successful")
-  document.location.href = "/Assets/Pages/ListScreen.html";
-	
+  document.location.href = "/Assets/Pages/ListScreen.html";*/
+
+  ///*
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      alert('User Created!');
+      document.location.href = "LoginScreen.html";
+    })
+    .catch((err) => {
+      const errorCode = err.code;
+      const errorMessage = err.message;
+      alert(errorMessage);
+    });//*/
 }
 
  function login(){
@@ -62,18 +58,15 @@ function signup(){
     if(email == "" || password == ""){
 			alert("Missing the either Username,Password or Email");
 			return;
-	}
+  }
+  /*
     const promise = auth.signInWithEmailAndPassword(email.value,password.value);
     promise.catch(e=>alert(e.message));
-    document.location.href = "/Assets/Pages/ListScreen.html";
+    document.location.href = "/Assets/Pages/ListScreen.html";*/
 
-    /*  signInWithEmailAndPassword(auth, email, password)
+    ///*  
+    signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        const dt = new Date();
-         update(ref(database, 'users/' + user.uid),{
-          last_login: dt,
-        })
          alert('User Logged In!');
         document.location.href = "LoginScreen.html";
       })
@@ -81,9 +74,9 @@ function signup(){
         const errorCode = err.code;
         const errorMessage = err.message;
         alert(errorMessage);
-  });*/
+  });//*/
  }
- 
+
 //  Unused
 function logout(){
   auth.signOut();
