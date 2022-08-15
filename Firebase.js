@@ -40,6 +40,7 @@ function signup(){
   ///*
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
+      const user = userCredential.user;
       alert('User Created!');
       document.location.href = "/Assets/Pages/ListScreen.html";
     })
@@ -67,6 +68,7 @@ function signup(){
     ///*  
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        const user = userCredential.user;
          alert('User Logged In!');
          document.location.href = "/Assets/Pages/ListScreen.html";
       })

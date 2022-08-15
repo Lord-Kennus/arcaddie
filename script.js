@@ -1,57 +1,25 @@
-// ------------------------------------FIREBASE--------------------------------
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
-import { getDatabase, ref, set, child, update, remove, get } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
-
-const firebaseConfig = {
- apiKey: "AIzaSyDObYM5Byctz3vuREPMLS3QA0yTjyxCals",
- authDomain: "golfar-ce0b6.firebaseapp.com",
- databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app",
- projectId: "golfar-ce0b6",
- storageBucket: "golfar-ce0b6.appspot.com",
- messagingSenderId: "41881550667",
- databaseURL: "https://golfar-ce0b6-default-rtdb.europe-west1.firebasedatabase.app/",
- appId: "1:41881550667:web:ebfe5e13c7eaf5256c72ce"
-};
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
 const loadPlaces = function (coords) {
     return loadPlaceStatic();
 };
 
-// ------------------------------------PLACES--------------------------------
-
-var Course
-function loadCourse(){
-    Course = document.getElementById('course').value;
-    document.location.href = "index.html";
-}
-
+// get the static places
 function loadPlaceStatic() {
-    //  https://www.mscorecard.com/mscorecard/coordinates.php?cid=141519640570836077_1_2
     const PLACES = [
         {
-            name: 'Hole',
+            name: 'Tee Box 1: 89yds',
             location: {
-                lat: 55.085087,
-                lng: -6.453370,  
+                lat: 55.005888,
+                lng: -7.323580,  
             }
         },
         {
-            name: 'Tee',
+            name: 'Hole 1: 284yds',
             location: {
-                lat: 55.084894,
-                lng: -6.453338,
+                lat: 55.003826,
+                lng: -7.323887,
             }
         },
     ];
-        /*     
-        const dbref = ref(db);
-            get(child(dbref, Course + "/Hole" + Count + "P")).then((snapshot)=>{
-                snapshot.forEach(addPlace(snapshot));
-            });
-        */
 
     return new Promise((resolve, reject) => {
         try {
@@ -61,127 +29,33 @@ function loadPlaceStatic() {
         }
     })
 }
-const PLACES;
-function addPlace(Snapshot){
-     PLACES.push(Snapshot.value());
-}
-
-function resetPlaces(){
-    if(PLACES.length > 0){
-        for(let i = 0; i > PLACES.length; i++){
-            PLACES.shift();
-        }
-    }
-}
-
-function removeMarkers(){
-    let scene = document.querySelector('a-scene');
-    for(let j = 0; j < scene.children.length(); j++){
-        scene.removeChild(scene.lastChild);
-    }
-}
-
-function renderPlaces(places) {
-    places.forEach((place) => {
-        let name = place.name();
-        let latitude = place.location.lat;  
-        //  let latitude = place.lat
-        let longitude = place.location.lng; 
-        //  let longitude = place.lng
-
-        let text = document.createElement('a-link');
-        text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
-        text.setAttribute('title', place.name);
-        text.setAttribute('scale', '3 3 3');
-
-        text.addEventListener('loaded', () => {
-            window.dispatchEvent(new CustomEvent('gps-entity-place-loaded', { detail: { component: this.el }}))
-        });
-            const clickListener = function(ev) {
-                        ev.stopPropagation();
-                        ev.preventDefault();
-                        //const distanceMsg = document.querySelector('[gps-entity-place]').getAttribute('distanceMsg');
-                        //const distanceMsg = calcDist(place.lat,place.lng)
-                        const distanceMsg = calcDist(place.location.lat,place.location.lng)
-                        const el = ev.detail.intersection && ev.detail.intersection.object.el;
-
-                        if (el && el === ev.target) {
-                            const label = document.createElement('span');
-                            const container = document.createElement('div');
-                            container.setAttribute('id', 'place-dist');
-                            alert(distanceMsg);
-                            container.appendChild(label);
-                            document.body.appendChild(container);
-                            
-                            setTimeout(() => {
-                                container.parentElement.removeChild(container);
-                            }, 1500);
-                        }
-                    };
-
-                    text.addEventListener('click', clickListener);
-        scene.appendChild(text);
-    });
-}
-
-// ------------------------------------DISTANCE--------------------------------
-
-const calcDist = function(lat2, lon2){
-    const R = 6371e3; 
-    const φ1 = position.coords.latitude * Math.PI/180;
-    const φ2 = position.coords.longitude * Math.PI/180;
-    const Δφ = (lat2-lat1) * Math.PI/180;
-    const Δλ = (lon2-lon1) * Math.PI/180;
-
-    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-          Math.cos(φ1) * Math.cos(φ2) *
-          Math.sin(Δλ/2) * Math.sin(Δλ/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-    const d = R * c;
-    return d;
-} 
-
-// ------------------------------------BUTTON FUNCTIONS--------------------------------
-
-var Count = 1;
-function NextHole(){
-    removeMarkers();
-    resetPlaces();
-    Count++;
-    if (Count > 18){  // Need to add validation
-        alert('You are finished!');
-        Count--;
-    }
-    else{
-        renderPlaces(places);
-    }
-    document.getElementById("field1").value = ('Hole ' + Count);
-}
-
-function PreviousHole(){
-    removeMarkers();
-    resetPlaces();
-    Count--;
-    if(Count < 1){
-        alert('There is no previous hole!');
-        Count = 1;
-    }
-    else{
-       renderPlaces(places);
-    }
-    document.getElementById("field1").value = ('Hole ' + Count);
-}
-
-// ------------------------------------ON PAGE LOAD--------------------------------
 
 window.onload = () => {
     const scene = document.querySelector('a-scene');
+
+    // first get current user location
     return navigator.geolocation.getCurrentPosition(function (position) {
+
+        // than use it to load from remote APIs some places nearby
         loadPlaces(position.coords)
             .then((places) => {
                 alert(position.coords.latitude + " : " + position.coords.longitude);
-                renderPlaces(places);
+                places.forEach((place) => {
+                    const latitude = place.location.lat;
+                    const longitude = place.location.lng;
+
+                    // add place name
+                    const text = document.createElement('a-link');
+                    text.setAttribute('gps-entity-place', `latitude: ${latitude}; longitude: ${longitude};`);
+                    text.setAttribute('title', place.name);
+                    text.setAttribute('scale', '10 10 10');
+
+                    text.addEventListener('loaded', () => {
+                        window.dispatchEvent(new CustomEvent('gps-entity-place-loaded'))
+                    });
+
+                    scene.appendChild(text);
+                });
             })
     },
         (err) => console.error('Error in retrieving position', err),
